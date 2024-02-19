@@ -2,7 +2,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="App.MoRent" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="App.iGit" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_200</item>
