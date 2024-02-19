@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "iGit"
 include(":app")
+include(":core")
