@@ -34,4 +34,7 @@ android {
 
 dependencies {
 
+    api("androidx.core:core-ktx:1.12.0")
+    api("androidx.appcompat:appcompat:1.6.1")
+
 }

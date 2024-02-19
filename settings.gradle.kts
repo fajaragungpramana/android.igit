@@ -17,3 +17,4 @@ rootProject.name = "iGit"
 include(":app")
 include(":core")
 include(":common")
+include(":widget")

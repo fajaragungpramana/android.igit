@@ -1,20 +1,17 @@
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     id("org.jetbrains.kotlin.android")
 }
 
 android {
-    namespace = "com.github.fajaragungpramana.igit"
+    namespace = "com.github.fajaragungpramana.igit.widget"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.github.fajaragungpramana.igit"
         minSdk = 21
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -37,8 +34,6 @@ android {
 
 dependencies {
 
-    implementation(project(":core"))
-    implementation(project(":common"))
-    implementation(project(":widget"))
+    api("com.google.android.material:material:1.11.0")
 
 }
