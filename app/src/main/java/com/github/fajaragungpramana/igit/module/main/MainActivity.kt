@@ -21,18 +21,18 @@ class MainActivity : AppActivity<ActivityMainBinding>() {
             it.setKeepOnScreenCondition { keep }
             it.setOnExitAnimationListener { viewProvider ->
 
-                val slideUp = ObjectAnimator.ofFloat(
+                val slideDown = ObjectAnimator.ofFloat(
                     viewProvider.view,
                     View.TRANSLATION_Y,
                     0f,
-                    -viewProvider.view.height.toFloat()
+                    +viewProvider.view.height.toFloat()
                 )
-                slideUp.interpolator = AnticipateInterpolator()
-                slideUp.duration = 200L
+                slideDown.interpolator = AnticipateInterpolator()
+                slideDown.duration = 200L
 
-                slideUp.doOnEnd { viewProvider.remove() }
+                slideDown.doOnEnd { viewProvider.remove() }
 
-                slideUp.start()
+                slideDown.start()
             }
         }
 
