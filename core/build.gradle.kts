@@ -1,14 +1,16 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    id(Plugin.LIBRARY)
+    id(Plugin.KOTLIN)
+    id(Plugin.KOTLIN_KAPT)
+    id(Plugin.HILT)
 }
 
 android {
     namespace = "com.github.fajaragungpramana.igit.core"
-    compileSdk = 34
+    compileSdk = Version.TARGET_SDK
 
     defaultConfig {
-        minSdk = 21
+        minSdk = Version.MIN_SDK
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -16,7 +18,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -34,6 +36,15 @@ android {
 
 dependencies {
 
-    
+    implementation(Dependency.Google.HILT)
+    kapt(Dependency.Google.HILT_COMPILER)
 
+    api(Dependency.Square.RETROFIT)
+    implementation(Dependency.Square.CONVERTER_GSON)
+    implementation(Dependency.Square.LOGGING_INTERCEPTOR)
+
+}
+
+kapt {
+    correctErrorTypes = true
 }

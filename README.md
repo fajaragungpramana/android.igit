@@ -9,7 +9,7 @@ Development :
 - Coil
 - Hilt
 - Jetpack Navigation
-- Retrofit [Gson, Logging]
+- Retrofit [Network, Gson, Logging]
 - Coroutines [Channel, Flow]
 - Unit Test [Mockito]
 - UI Automation Test [Espresso, Automator]
