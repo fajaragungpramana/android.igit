@@ -13,7 +13,7 @@ abstract class AppFragment<VB : ViewBinding> : Fragment() {
     val viewBinding: VB
         get() = _viewBinding
 
-    protected abstract fun onViewBinding(inflater: LayoutInflater, container: ViewGroup?): VB
+    protected abstract fun onViewBinding(container: ViewGroup?): VB
 
     protected abstract fun onViewCreated(savedInstanceState: Bundle?)
 
@@ -22,7 +22,7 @@ abstract class AppFragment<VB : ViewBinding> : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        if (!::_viewBinding.isInitialized) _viewBinding = onViewBinding(inflater, container)
+        if (!::_viewBinding.isInitialized) _viewBinding = onViewBinding(container)
         return viewBinding.root
     }
 
