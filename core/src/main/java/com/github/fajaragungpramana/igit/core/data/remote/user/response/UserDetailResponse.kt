@@ -8,6 +8,9 @@ data class UserDetailResponse(
     val avatarUrl: String? = null,
 
     @SerializedName("name")
-    val name: String? = null
+    val name: String? = null,
+
+    @SerializedName("login")
+    val login: String? = null
 
 )
