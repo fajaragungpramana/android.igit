@@ -30,6 +30,13 @@ To get started with this project, you will need to have the following installed 
 To get started with this project, you will need to have the following installed on your local machine:
 - Clone the repository: git clone `https://github.com/fajaragungpramana/android.igit`
 - Open the project with AndroidStudio
+- Open your local.properties in root project and add this variable
+```
+api.base_url_release="https://api.github.com/"
+api.token_release="YOUR_GITHUB_TOKEN_HERE"
+api.base_url_debug="https://api.github.com/"
+api.token_debug="YOUR_GITHUB_TOKEN_HERE"
+```
 - Build and Run project on android device or simulator
 
 ## License
