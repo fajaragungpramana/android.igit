@@ -2,8 +2,10 @@ package com.github.fajaragungpramana.igit.core.domain.user
 
 import androidx.paging.PagingData
 import androidx.paging.map
+import com.github.fajaragungpramana.igit.core.app.AppResult
 import com.github.fajaragungpramana.igit.core.data.remote.user.IUserRepository
 import com.github.fajaragungpramana.igit.core.data.remote.user.request.UserRequest
+import com.github.fajaragungpramana.igit.core.data.remote.user.response.UserDetailResponse
 import com.github.fajaragungpramana.igit.core.domain.user.model.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -19,5 +21,8 @@ class UserInteractor @Inject constructor(private val userRepository: IUserReposi
             send(paging.map { User.mapToObject(it) })
         }
     }.flowOn(Dispatchers.IO)
+
+    override suspend fun getUser(username: String): Flow<AppResult<UserDetailResponse>> =
+        userRepository.getUser(username)
 
 }
