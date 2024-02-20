@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">iGit</string>
     <string name="search_username">Search username</string>
+    <string name="unknown">Unknown</string>
 </resources>

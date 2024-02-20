@@ -16,15 +16,16 @@ data class UserRepository @Inject constructor(private val userDataSource: IUserD
     IUserRepository {
 
     override suspend fun getListUser(userRequest: UserRequest): Flow<PagingData<UserDetailResponse>> =
-        Pager(PagingConfig(pageSize = 30)) { UserPagingSource(userDataSource, userRequest) }
+        Pager(PagingConfig(pageSize = 12)) { UserPagingSource(userDataSource, userRequest) }
             .flow
+
     override suspend fun getUser(username: String): Flow<AppResult<UserDetailResponse>> =
         channelFlow {
             val response = userDataSource.userDetail(username)
             if (response.isSuccessful)
                 send(AppResult.Success(response.body()))
             else
-                send(AppResult.Error("ERROR"))
+                send(AppResult.Error(response.message()))
         }.flowOn(Dispatchers.IO)
 
 }

@@ -27,7 +27,8 @@ class SearchViewModel @Inject constructor(private val userUseCase: UserUseCase) 
     }
 
     private fun getListUser(username: String?): Job = viewModelScope.launch {
-        userUseCase.getListUser(UserRequest(username)).collectLatest {
+        val request = UserRequest(username = username, perPage = 12)
+        userUseCase.getListUser(request).collectLatest {
             _state.send(SearchState.UserData(it))
         }
     }

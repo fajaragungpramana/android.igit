@@ -1,7 +1,10 @@
 package com.github.fajaragungpramana.igit.module.search
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,8 +28,7 @@ class SearchFragment : AppFragment<SearchFragmentBinding>(), AppState {
 
     override fun onViewCreated(savedInstanceState: Bundle?) {
         initUser()
-
-        viewModel.setEvent(SearchEvent.SearchUser("A"))
+        initSearch()
     }
 
     override fun onStateObserver() {
@@ -36,6 +38,16 @@ class SearchFragment : AppFragment<SearchFragmentBinding>(), AppState {
                     is SearchState.UserData -> userAdapter.submitData(it.pagingData)
                 }
             }
+        }
+    }
+
+    private fun initSearch() {
+        viewModel.setEvent(SearchEvent.SearchUser("a"))
+
+        viewBinding.tieSearchUsername.addTextChangedListener {
+            Handler(Looper.getMainLooper()).postDelayed({
+                viewModel.setEvent(SearchEvent.SearchUser(it.toString()))
+            }, 500)
         }
     }
 
