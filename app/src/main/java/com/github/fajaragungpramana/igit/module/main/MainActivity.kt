@@ -10,8 +10,10 @@ import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.github.fajaragungpramana.igit.common.app.AppActivity
 import com.github.fajaragungpramana.igit.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
 @SuppressLint("CustomSplashScreen")
+@AndroidEntryPoint
 class MainActivity : AppActivity<ActivityMainBinding>() {
 
     private var keep = true
