@@ -11,7 +11,7 @@ import com.github.fajaragungpramana.igit.common.contract.AppState
 abstract class AppFragment<VB : ViewBinding> : Fragment() {
 
     private lateinit var _viewBinding: VB
-    val viewBinding: VB
+    protected val viewBinding: VB
         get() = _viewBinding
 
     protected abstract fun onViewBinding(container: ViewGroup?): VB

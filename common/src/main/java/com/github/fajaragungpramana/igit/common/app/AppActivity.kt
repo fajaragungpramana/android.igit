@@ -8,7 +8,7 @@ import com.github.fajaragungpramana.igit.common.contract.AppState
 abstract class AppActivity<VB : ViewBinding> : AppCompatActivity() {
 
     private lateinit var _viewBinding: VB
-    val viewBinding: VB
+    protected val viewBinding: VB
         get() = _viewBinding
 
     protected abstract fun onViewBinding(): VB
