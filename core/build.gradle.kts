@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id(Plugin.LIBRARY)
     id(Plugin.KOTLIN)
@@ -9,6 +11,9 @@ android {
     namespace = "com.github.fajaragungpramana.igit.core"
     compileSdk = Version.TARGET_SDK
 
+    val properties = Properties()
+    properties.load(project.rootProject.file("local.properties").inputStream())
+
     defaultConfig {
         minSdk = Version.MIN_SDK
 
@@ -16,6 +21,9 @@ android {
         consumerProguardFiles("consumer-rules.pro")
     }
 
+    buildFeatures {
+        buildConfig = true
+    }
     buildTypes {
         release {
             isMinifyEnabled = true
@@ -23,6 +31,14 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
+            buildConfigField("String", Config.API_BASE_URL, properties.getProperty("api.base_url_release"))
+            buildConfigField("String", Config.API_TOKEN, properties.getProperty("api.token_release"))
+        }
+
+        debug {
+            buildConfigField("String", Config.API_BASE_URL, properties.getProperty("api.base_url_debug"))
+            buildConfigField("String", Config.API_TOKEN, properties.getProperty("api.token_debug"))
         }
     }
     compileOptions {
@@ -35,6 +51,8 @@ android {
 }
 
 dependencies {
+
+    implementation(Dependency.AndroidX.PAGING_RUNTIME_KTX)
 
     implementation(Dependency.Google.HILT)
     kapt(Dependency.Google.HILT_COMPILER)
