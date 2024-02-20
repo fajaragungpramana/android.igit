@@ -26,7 +26,7 @@ class SearchFragment : AppFragment<SearchFragmentBinding>(), AppState {
     override fun onViewCreated(savedInstanceState: Bundle?) {
         initUser()
 
-        viewModel.setEvent(SearchEvent.SearchUser("fajaragungpramana"))
+        viewModel.setEvent(SearchEvent.SearchUser("A"))
     }
 
     override fun onStateObserver() {
