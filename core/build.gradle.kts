@@ -52,6 +52,8 @@ android {
 
 dependencies {
 
+    implementation(Dependency.AndroidX.PAGING_RUNTIME_KTX)
+
     implementation(Dependency.Google.HILT)
     kapt(Dependency.Google.HILT_COMPILER)
 
