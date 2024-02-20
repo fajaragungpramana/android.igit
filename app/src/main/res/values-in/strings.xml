@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">iGit</string>
-    <string name="search_username">Cari nama pengguna</string>
+    <string name="search_username">Cari nama</string>
+    <string name="unknown">Tidak di ketahui</string>
+    <string name="fajaragungpramana">fajaragungpramana</string>
 </resources>
