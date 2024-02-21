@@ -56,6 +56,7 @@ dependencies {
     implementation(Dependency.AndroidX.NAVIGATION_UI_KTX)
 
     implementation(Dependency.Common.COIL)
+    implementation(Dependency.Common.LOTTIE)
 
     implementation(Dependency.Google.HILT)
     kapt(Dependency.Google.HILT_COMPILER)

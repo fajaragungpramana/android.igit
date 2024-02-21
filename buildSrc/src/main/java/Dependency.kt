@@ -21,6 +21,7 @@ object Dependency {
 
     object Common {
         const val COIL = "io.coil-kt:coil:2.5.0"
+        const val LOTTIE = "com.airbnb.android:lottie:6.3.0"
     }
 
     object Google {
