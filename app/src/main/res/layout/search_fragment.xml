@@ -56,4 +56,19 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:listitem="@layout/item_user" />
 
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/sfl_shimmer_item_user"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ll_shimmer_item_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
