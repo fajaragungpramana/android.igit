@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.fajaragungpramana.igit.common.app.AppFragment
 import com.github.fajaragungpramana.igit.common.contract.AppState
 import com.github.fajaragungpramana.igit.databinding.SearchFragmentBinding
+import com.github.fajaragungpramana.igit.module.adapter.LoadStateAdapter
 import com.github.fajaragungpramana.igit.module.adapter.UserAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -42,7 +43,7 @@ class SearchFragment : AppFragment<SearchFragmentBinding>(), AppState {
     }
 
     private fun initSearch() {
-        viewModel.setEvent(SearchEvent.SearchUser("a"))
+        viewModel.setEvent(SearchEvent.SearchUser(username = "a"))
 
         viewBinding.tieSearchUsername.addTextChangedListener {
             Handler(Looper.getMainLooper()).postDelayed({
@@ -56,7 +57,7 @@ class SearchFragment : AppFragment<SearchFragmentBinding>(), AppState {
 
         viewBinding.apply {
             rvUser.layoutManager = LinearLayoutManager(requireActivity())
-            rvUser.adapter = userAdapter
+            rvUser.adapter = userAdapter.withLoadStateFooter(LoadStateAdapter())
         }
     }
 
