@@ -53,6 +53,7 @@ class SearchFragment : AppFragment<SearchFragmentBinding>(), AppState {
             viewBinding.sflShimmerItemUser.isVisible = isLoading
 
             if (isLoading) {
+                viewBinding.llShimmerItemUser.removeAllViews()
                 viewBinding.sflShimmerItemUser.startShimmer()
 
                 for (i in 1..5) {
