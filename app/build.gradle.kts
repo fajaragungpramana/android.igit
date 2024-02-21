@@ -57,6 +57,7 @@ dependencies {
 
     implementation(Dependency.Common.COIL)
     implementation(Dependency.Common.LOTTIE)
+    implementation(Dependency.Common.SHIMMER)
 
     implementation(Dependency.Google.HILT)
     kapt(Dependency.Google.HILT_COMPILER)
