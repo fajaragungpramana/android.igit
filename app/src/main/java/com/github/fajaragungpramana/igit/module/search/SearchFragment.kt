@@ -18,6 +18,7 @@ import com.github.fajaragungpramana.igit.databinding.ShimmerItemUserBinding
 import com.github.fajaragungpramana.igit.extension.setMargins
 import com.github.fajaragungpramana.igit.module.adapter.LoadStateAdapter
 import com.github.fajaragungpramana.igit.module.adapter.UserAdapter
+import com.github.fajaragungpramana.igit.module.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -33,6 +34,7 @@ class SearchFragment : AppFragment<SearchFragmentBinding>(), AppState {
         SearchFragmentBinding.inflate(layoutInflater, container, false)
 
     override fun onViewCreated(savedInstanceState: Bundle?) {
+        initView()
         initUser()
         initSearch()
         initUserLoadState()
@@ -45,6 +47,12 @@ class SearchFragment : AppFragment<SearchFragmentBinding>(), AppState {
                     is SearchState.UserData -> userAdapter.submitData(it.pagingData)
                 }
             }
+        }
+    }
+
+    private fun initView() {
+        (requireActivity() as MainActivity).apply {
+            supportActionBar?.setDisplayHomeAsUpEnabled(false)
         }
     }
 
@@ -61,7 +69,7 @@ class SearchFragment : AppFragment<SearchFragmentBinding>(), AppState {
                     val shimmerItemUser = ShimmerItemUserBinding.inflate(layoutInflater).root
                     viewBinding.llShimmerItemUser.addView(shimmerItemUser)
 
-                    shimmerItemUser.setMargins(16f, 0f, 16f, 16f)
+                    shimmerItemUser.setMargins(16f, 16f, 16f, 16f)
                 }
             } else
                 viewBinding.sflShimmerItemUser.stopShimmer()
