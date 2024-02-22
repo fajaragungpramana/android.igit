@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.fajaragungpramana.igit.common.app.AppFragment
@@ -77,7 +78,10 @@ class SearchFragment : AppFragment<SearchFragmentBinding>(), AppState {
     }
 
     private fun initUser() {
-        userAdapter = UserAdapter()
+        userAdapter = UserAdapter {
+            val action = SearchFragmentDirections.actionSearchFragmentToDetailFragment()
+            findNavController().navigate(action)
+        }
 
         viewBinding.apply {
             rvUser.layoutManager = LinearLayoutManager(requireActivity())

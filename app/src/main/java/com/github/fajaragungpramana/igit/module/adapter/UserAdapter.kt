@@ -10,7 +10,7 @@ import com.github.fajaragungpramana.igit.common.app.AppRecyclerViewHolder
 import com.github.fajaragungpramana.igit.core.domain.user.model.User
 import com.github.fajaragungpramana.igit.databinding.ItemUserBinding
 
-class UserAdapter : AppPagingAdapter<ItemUserBinding, User, UserAdapter.ViewHolder>(User.diffUtil) {
+class UserAdapter(private val onItemClick: (User) -> Unit) : AppPagingAdapter<ItemUserBinding, User, UserAdapter.ViewHolder>(User.diffUtil) {
 
     override fun onViewBinding(viewGroup: ViewGroup): ItemUserBinding =
         ItemUserBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
@@ -25,6 +25,8 @@ class UserAdapter : AppPagingAdapter<ItemUserBinding, User, UserAdapter.ViewHold
             }
             viewBinding.mtvUsername.text = item.username
             viewBinding.mtvUserFullName.text = item.fullName
+
+            viewBinding.root.setOnClickListener { onItemClick(item) }
         }
 
     }
