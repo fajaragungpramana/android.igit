@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:orientation="vertical"
-    tools:parentTag="androidx.appcompat.widget.LinearLayoutCompat">
+    android:orientation="vertical">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/mtv_content"
         style="@style/TextBold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:textSize="@dimen/text_12sp" />
 
     <com.google.android.material.textview.MaterialTextView
@@ -21,7 +18,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_4dp"
-        android:gravity="center"
         android:textSize="@dimen/text_12sp" />
 
-</merge>
+</androidx.appcompat.widget.LinearLayoutCompat>

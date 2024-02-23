@@ -35,11 +35,15 @@
                         android:scaleType="centerCrop"
                         tools:src="@drawable/ic_launcher_background" />
 
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1" />
+
                     <com.github.fajaragungpramana.igit.widget.view.IgitTextPopularity
                         android:id="@+id/itp_user_repository"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dimen_16dp"
                         android:layout_weight="1"
                         app:contentPopularity="70"
                         app:titlePopularity="Repositories" />
