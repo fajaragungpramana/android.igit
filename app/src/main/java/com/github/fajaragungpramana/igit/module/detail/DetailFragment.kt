@@ -12,7 +12,11 @@ import com.github.fajaragungpramana.igit.common.contract.AppState
 import com.github.fajaragungpramana.igit.core.domain.user.model.User
 import com.github.fajaragungpramana.igit.databinding.FragmentDetailBinding
 import com.github.fajaragungpramana.igit.module.main.MainActivity
+import com.github.fajaragungpramana.igit.module.popularity.PopularityFragment
+import com.github.fajaragungpramana.igit.module.search.SearchFragmentDirections
+import com.github.fajaragungpramana.igit.widget.app.AppTabAdapter
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -26,7 +30,9 @@ class DetailFragment : AppFragment<FragmentDetailBinding>(), AppState {
         FragmentDetailBinding.inflate(layoutInflater)
 
     override fun onViewCreated(savedInstanceState: Bundle?) {
-        viewModel.setEvent(DetailEvent.User(username = "fajaragungpramana"))
+        initView()
+
+        viewModel.setEvent(DetailEvent.User(username = arguments?.getString("login").orEmpty()))
     }
 
     override fun onStateObserver() {
@@ -42,6 +48,19 @@ class DetailFragment : AppFragment<FragmentDetailBinding>(), AppState {
                 }
             }
         }
+    }
+
+    private fun initView() {
+        val adapter = AppTabAdapter(requireActivity())
+        adapter.addFragment(PopularityFragment(), "Repository")
+        adapter.addFragment(PopularityFragment(), "Followers")
+        adapter.addFragment(PopularityFragment(), "Following")
+
+        viewBinding.vpUserPopularity.adapter = adapter
+        viewBinding.vpUserPopularity.currentItem = 0
+        TabLayoutMediator(viewBinding.tlUserPopularity, viewBinding.vpUserPopularity) { tab, position ->
+            tab.text = adapter.getTitle(position)
+        }.attach()
     }
 
     private fun setUser(user: User) {

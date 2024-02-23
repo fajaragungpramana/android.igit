@@ -87,7 +87,7 @@ class SearchFragment : AppFragment<SearchFragmentBinding>(), AppState {
 
     private fun initUser() {
         userAdapter = UserAdapter {
-            val action = SearchFragmentDirections.actionSearchFragmentToDetailFragment()
+            val action = SearchFragmentDirections.actionSearchFragmentToDetailFragment(it.username)
             findNavController().navigate(action)
         }
 
