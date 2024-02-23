@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import coil.load
+import coil.transform.CircleCropTransformation
 import com.github.fajaragungpramana.igit.common.app.AppFragment
 import com.github.fajaragungpramana.igit.common.contract.AppState
+import com.github.fajaragungpramana.igit.core.domain.user.model.User
 import com.github.fajaragungpramana.igit.databinding.FragmentDetailBinding
 import com.github.fajaragungpramana.igit.module.main.MainActivity
 import com.google.android.material.snackbar.Snackbar
@@ -22,24 +25,14 @@ class DetailFragment : AppFragment<FragmentDetailBinding>(), AppState {
         FragmentDetailBinding.inflate(layoutInflater)
 
     override fun onViewCreated(savedInstanceState: Bundle?) {
-        initView()
-
         viewModel.setEvent(DetailEvent.User(username = "fajaragungpramana"))
-    }
-
-    private fun initView() {
-
     }
 
     override fun onStateObserver() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.collectLatest {
                 when (it) {
-                    is DetailState.UserData -> {
-                        (requireActivity() as MainActivity).apply {
-                            title = "fajaragungpramana"
-                        }
-                    }
+                    is DetailState.UserData -> setUser(it.user)
                     is DetailState.MessageData -> Snackbar.make(
                         viewBinding.root,
                         it.message,
@@ -47,6 +40,16 @@ class DetailFragment : AppFragment<FragmentDetailBinding>(), AppState {
                     ).show()
                 }
             }
+        }
+    }
+
+    private fun setUser(user: User) {
+        (requireActivity() as MainActivity).apply {
+            title = user.username
+        }
+        viewBinding.apply {
+            aivUserAvatar.load(user.avatar) { transformations(CircleCropTransformation()) }
+            mtvUserFullName.text = user.fullName
         }
     }
 

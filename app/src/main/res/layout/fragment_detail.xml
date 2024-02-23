@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -18,8 +19,58 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginHorizontal="@dimen/dimen_16dp"
                 android:orientation="vertical">
 
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/aiv_user_avatar"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:scaleType="centerCrop"
+                        tools:src="@drawable/ic_launcher_background" />
+
+                    <com.github.fajaragungpramana.igit.widget.view.IgitTextPopularity
+                        android:id="@+id/itp_user_repository"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_16dp"
+                        android:layout_weight="1"
+                        app:contentPopularity="70"
+                        app:titlePopularity="Repositories" />
+
+                    <com.github.fajaragungpramana.igit.widget.view.IgitTextPopularity
+                        android:id="@+id/itp_user_follower"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/dimen_16dp"
+                        android:layout_weight="1"
+                        app:contentPopularity="70"
+                        app:titlePopularity="Followers" />
+
+                    <com.github.fajaragungpramana.igit.widget.view.IgitTextPopularity
+                        android:id="@+id/itp_user_following"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:contentPopularity="70"
+                        app:titlePopularity="Following" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/mtv_user_full_name"
+                    style="@style/TextBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_8dp"
+                    android:textSize="@dimen/text_12sp"
+                    tools:text="@string/unknown" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 

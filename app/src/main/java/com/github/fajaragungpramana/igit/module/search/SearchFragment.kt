@@ -15,7 +15,7 @@ import com.github.fajaragungpramana.igit.common.app.AppFragment
 import com.github.fajaragungpramana.igit.common.contract.AppState
 import com.github.fajaragungpramana.igit.databinding.SearchFragmentBinding
 import com.github.fajaragungpramana.igit.databinding.ShimmerItemUserBinding
-import com.github.fajaragungpramana.igit.extension.setMargins
+import com.github.fajaragungpramana.igit.widget.extension.setMargins
 import com.github.fajaragungpramana.igit.module.adapter.LoadStateAdapter
 import com.github.fajaragungpramana.igit.module.adapter.UserAdapter
 import com.github.fajaragungpramana.igit.module.main.MainActivity

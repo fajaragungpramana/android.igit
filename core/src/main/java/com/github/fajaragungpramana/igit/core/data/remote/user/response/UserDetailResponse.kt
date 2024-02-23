@@ -11,6 +11,15 @@ data class UserDetailResponse(
     val name: String? = null,
 
     @SerializedName("login")
-    val login: String? = null
+    val login: String? = null,
+
+    @SerializedName("public_repos")
+    val publicRepos: Int? = null,
+
+    @SerializedName("followers")
+    val followers: Int? = null,
+
+    @SerializedName("following")
+    val following: Int? = null
 
 )
