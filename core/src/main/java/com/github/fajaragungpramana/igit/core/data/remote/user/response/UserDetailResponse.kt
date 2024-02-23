@@ -13,6 +13,12 @@ data class UserDetailResponse(
     @SerializedName("login")
     val login: String? = null,
 
+    @SerializedName("bio")
+    val bio: String? = null,
+
+    @SerializedName("email")
+    val email: String? = null,
+
     @SerializedName("public_repos")
     val publicRepos: Int? = null,
 

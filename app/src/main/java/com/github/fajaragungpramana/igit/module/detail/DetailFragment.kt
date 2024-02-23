@@ -2,6 +2,7 @@ package com.github.fajaragungpramana.igit.module.detail
 
 import android.os.Bundle
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import coil.load
@@ -50,6 +51,13 @@ class DetailFragment : AppFragment<FragmentDetailBinding>(), AppState {
         viewBinding.apply {
             aivUserAvatar.load(user.avatar) { transformations(CircleCropTransformation()) }
             mtvUserFullName.text = user.fullName
+
+            mtvUserBio.isVisible = !user.bio.isNullOrEmpty()
+            mtvUserBio.text = user.bio
+
+            mtvUserEmail.isVisible = !user.email.isNullOrEmpty()
+            mtvUserEmail.text = user.email
+
             itpUserRepository.content = user.totalRepository.toString()
             itpUserFollower.content = user.totalFollower.toString()
             itpUserFollowing.content = user.totalFollowing.toString()

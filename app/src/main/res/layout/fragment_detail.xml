@@ -12,7 +12,7 @@
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
             android:background="@null"
             app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
 
@@ -74,6 +74,27 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_8dp"
                     android:textSize="@dimen/text_12sp"
+                    tools:text="@string/unknown" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/mtv_user_bio"
+                    style="@style/TextRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_4dp"
+                    android:textSize="@dimen/text_12sp"
+                    tools:text="@string/unknown" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/mtv_user_email"
+                    style="@style/TextRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_4dp"
+                    android:drawablePadding="@dimen/dimen_8dp"
+                    android:textSize="@dimen/text_12sp"
+                    app:drawableStartCompat="@drawable/ic_email_black"
+                    app:drawableTint="@android:color/darker_gray"
                     tools:text="@string/unknown" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
