@@ -1,8 +1,6 @@
 package com.github.fajaragungpramana.igit.module.search
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
@@ -38,6 +36,8 @@ class SearchFragment : AppFragment<SearchFragmentBinding>(), AppState {
         initUser()
         initSearch()
         initUserLoadState()
+
+        viewModel.setEvent(SearchEvent.SearchUser(username = "a"))
     }
 
     override fun onStateObserver() {
@@ -59,29 +59,29 @@ class SearchFragment : AppFragment<SearchFragmentBinding>(), AppState {
     private fun initUserLoadState() {
         userAdapter.addLoadStateListener {
             val isLoading = it.refresh is LoadState.Loading
-            viewBinding.sflShimmerItemUser.isVisible = isLoading
+            viewBinding.apply {
+                sflShimmerItemUser.isVisible = isLoading
+                rvUser.isVisible = !isLoading
 
-            if (isLoading) {
-                viewBinding.llShimmerItemUser.removeAllViews()
-                viewBinding.sflShimmerItemUser.startShimmer()
+                if (isLoading) {
+                    llShimmerItemUser.removeAllViews()
+                    sflShimmerItemUser.startShimmer()
 
-                for (i in 1..5) {
-                    val shimmerItemUser = ShimmerItemUserBinding.inflate(layoutInflater).root
-                    viewBinding.llShimmerItemUser.addView(shimmerItemUser)
+                    for (i in 1..5) {
+                        val shimmerItemUser = ShimmerItemUserBinding.inflate(layoutInflater).root
+                        llShimmerItemUser.addView(shimmerItemUser)
 
-                    shimmerItemUser.setMargins(16f, 16f, 16f, 16f)
-                }
-            } else
-                viewBinding.sflShimmerItemUser.stopShimmer()
+                        shimmerItemUser.setMargins(16f, 16f, 16f, 16f)
+                    }
+                } else
+                    sflShimmerItemUser.stopShimmer()
+            }
         }
     }
 
     private fun initSearch() {
-        viewModel.setEvent(SearchEvent.SearchUser(username = "a"))
         viewBinding.tieSearchUsername.addTextChangedListener {
-            Handler(Looper.getMainLooper()).postDelayed({
-                viewModel.setEvent(SearchEvent.SearchUser(it.toString()))
-            }, 500)
+            viewModel.setEvent(SearchEvent.SearchUser(it.toString()))
         }
     }
 

@@ -5,10 +5,12 @@ import androidx.lifecycle.viewModelScope
 import com.github.fajaragungpramana.igit.core.data.remote.user.request.UserRequest
 import com.github.fajaragungpramana.igit.core.domain.user.UserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,9 +28,10 @@ class SearchViewModel @Inject constructor(private val userUseCase: UserUseCase) 
         }
     }
 
+    @OptIn(FlowPreview::class)
     private fun getListUser(username: String?): Job = viewModelScope.launch {
         val request = UserRequest(username = username, perPage = 12)
-        userUseCase.getListUser(request).collectLatest {
+        userUseCase.getListUser(request).debounce(1000).collectLatest {
             _state.send(SearchState.UserData(it))
         }
     }

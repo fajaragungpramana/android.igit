@@ -7,13 +7,9 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 class AppTabAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
 
     private val listFragment by lazy { arrayListOf<Fragment>() }
-    private val listTitle by lazy { arrayListOf<String>() }
 
-    fun getTitle(position: Int) = listTitle[position]
-
-    fun addFragment(fragment: Fragment, title: String) {
+    fun addFragment(fragment: Fragment) {
         listFragment.add(fragment)
-        listTitle.add(title)
     }
 
     override fun getItemCount(): Int = listFragment.size
