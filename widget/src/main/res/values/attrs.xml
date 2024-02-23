@@ -2,8 +2,8 @@
 <resources>
 
     <declare-styleable name="IgitTextPopularity">
-        <attr name="contentPopularity" format="string" />
-        <attr name="titlePopularity" format="string" />
+        <attr name="contentPopularity" format="string|reference" />
+        <attr name="titlePopularity" format="string|reference" />
     </declare-styleable>
 
 </resources>

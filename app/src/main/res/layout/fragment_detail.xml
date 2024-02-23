@@ -45,8 +45,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:contentPopularity="70"
-                        app:titlePopularity="Repositories" />
+                        app:contentPopularity="0"
+                        app:titlePopularity="@string/repositories" />
 
                     <com.github.fajaragungpramana.igit.widget.view.IgitTextPopularity
                         android:id="@+id/itp_user_follower"
@@ -54,16 +54,16 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/dimen_16dp"
                         android:layout_weight="1"
-                        app:contentPopularity="70"
-                        app:titlePopularity="Followers" />
+                        app:contentPopularity="0"
+                        app:titlePopularity="@string/followers" />
 
                     <com.github.fajaragungpramana.igit.widget.view.IgitTextPopularity
                         android:id="@+id/itp_user_following"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:contentPopularity="70"
-                        app:titlePopularity="Following" />
+                        app:contentPopularity="0"
+                        app:titlePopularity="@string/following" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 

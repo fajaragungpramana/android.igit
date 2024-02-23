@@ -12,7 +12,7 @@ class IgitTextPopularity(context: Context, attrs: AttributeSet) : LinearLayout(c
     private var contentTextView: MaterialTextView
     private var titleTextView: MaterialTextView
 
-    private var content: String?
+    var content: String?
         set(value) {
             contentTextView.text = value.orEmpty()
         }

@@ -3,4 +3,7 @@
     <string name="search_username">Search username</string>
     <string name="unknown">Unknown</string>
     <string name="fajaragungpramana">fajaragungpramana</string>
+    <string name="repositories">Repositories</string>
+    <string name="followers">Followers</string>
+    <string name="following">Following</string>
 </resources>
