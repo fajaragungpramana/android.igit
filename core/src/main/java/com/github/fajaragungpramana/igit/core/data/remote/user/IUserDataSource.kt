@@ -16,4 +16,16 @@ interface IUserDataSource {
     @GET("users/{username}")
     suspend fun userDetail(@Path("username") username: String): Response<UserDetailResponse>
 
+    @GET("users/{username}/followers")
+    suspend fun followers(
+        @Path("username") username: String,
+        @QueryMap userRequest: UserRequest
+    ): Response<List<UserDetailResponse>>
+
+    @GET("users/{username}/following")
+    suspend fun following(
+        @Path("username") username: String,
+        @QueryMap userRequest: UserRequest
+    ): Response<List<UserDetailResponse>>
+
 }

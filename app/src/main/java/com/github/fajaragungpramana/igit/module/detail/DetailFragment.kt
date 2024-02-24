@@ -11,6 +11,7 @@ import coil.transform.CircleCropTransformation
 import com.github.fajaragungpramana.igit.R
 import com.github.fajaragungpramana.igit.common.app.AppFragment
 import com.github.fajaragungpramana.igit.common.contract.AppState
+import com.github.fajaragungpramana.igit.core.data.remote.user.UserPagingSource
 import com.github.fajaragungpramana.igit.core.domain.user.model.User
 import com.github.fajaragungpramana.igit.databinding.FragmentDetailBinding
 import com.github.fajaragungpramana.igit.module.main.MainActivity
@@ -27,13 +28,15 @@ class DetailFragment : AppFragment<FragmentDetailBinding>(), AppState {
 
     private val viewModel: DetailViewModel by viewModels()
 
+    private val username by lazy { arguments?.getString("login").orEmpty() }
+
     override fun onViewBinding(container: ViewGroup?): FragmentDetailBinding =
         FragmentDetailBinding.inflate(layoutInflater)
 
     override fun onViewCreated(savedInstanceState: Bundle?) {
         initView()
 
-        viewModel.setEvent(DetailEvent.User(username = arguments?.getString("login").orEmpty()))
+        viewModel.setEvent(DetailEvent.User(username = username))
     }
 
     override fun onStateObserver() {
@@ -53,9 +56,9 @@ class DetailFragment : AppFragment<FragmentDetailBinding>(), AppState {
 
     private fun initView() {
         val adapter = AppTabAdapter(requireActivity())
-        adapter.addFragment(PopularityFragment())
-        adapter.addFragment(PopularityFragment())
-        adapter.addFragment(PopularityFragment())
+        adapter.addFragment(PopularityFragment(username, UserPagingSource.Type.REPOSITORY))
+        adapter.addFragment(PopularityFragment(username, UserPagingSource.Type.FOLLOWERS))
+        adapter.addFragment(PopularityFragment(username, UserPagingSource.Type.FOLLOWING))
 
         val listTabIcon = intArrayOf(
             R.drawable.ic_repositories_black,

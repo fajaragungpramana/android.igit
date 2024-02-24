@@ -3,6 +3,7 @@ package com.github.fajaragungpramana.igit.module.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.github.fajaragungpramana.igit.common.app.AppPagingAdapter
@@ -24,6 +25,8 @@ class UserAdapter(private val onItemClick: (User) -> Unit) : AppPagingAdapter<It
                 transformations(CircleCropTransformation())
             }
             viewBinding.mtvUsername.text = item.username
+
+            viewBinding.mtvUserFullName.isVisible = !item.fullName.isNullOrEmpty()
             viewBinding.mtvUserFullName.text = item.fullName
 
             viewBinding.root.setOnClickListener { onItemClick(item) }

@@ -11,6 +11,8 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.fajaragungpramana.igit.common.app.AppFragment
 import com.github.fajaragungpramana.igit.common.contract.AppState
+import com.github.fajaragungpramana.igit.core.data.remote.user.UserPagingSource
+import com.github.fajaragungpramana.igit.core.data.remote.user.request.UserRequest
 import com.github.fajaragungpramana.igit.databinding.SearchFragmentBinding
 import com.github.fajaragungpramana.igit.databinding.ShimmerItemUserBinding
 import com.github.fajaragungpramana.igit.widget.extension.setMargins
@@ -36,8 +38,6 @@ class SearchFragment : AppFragment<SearchFragmentBinding>(), AppState {
         initUser()
         initSearch()
         initUserLoadState()
-
-        viewModel.setEvent(SearchEvent.SearchUser(username = "a"))
     }
 
     override fun onStateObserver() {
@@ -80,8 +80,9 @@ class SearchFragment : AppFragment<SearchFragmentBinding>(), AppState {
     }
 
     private fun initSearch() {
+        val userRequest = UserRequest(perPage = 12, type = UserPagingSource.Type.SEARCH)
         viewBinding.tieSearchUsername.addTextChangedListener {
-            viewModel.setEvent(SearchEvent.SearchUser(it.toString()))
+            viewModel.setEvent(SearchEvent.SearchUser(userRequest.copy(q = it.toString())))
         }
     }
 

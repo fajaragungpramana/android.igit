@@ -16,19 +16,45 @@ class UserPagingSource @Inject constructor(
 
         val page = params.key ?: 1
 
-        val listUserResponse = userDataSource.searchUser(userRequest.copy(page = page))
-        if (listUserResponse.isSuccessful) {
-            val listUser = listUserResponse.body()?.listItem
-            if (!listUser.isNullOrEmpty()) listUser.forEach {
-                val username = it.login.orEmpty()
+        when (userRequest.type) {
+            Type.SEARCH -> {
+                val listUserResponse = userDataSource.searchUser(userRequest.copy(page = page))
+                if (listUserResponse.isSuccessful) {
+                    val listUser = listUserResponse.body()?.listItem
+                    if (!listUser.isNullOrEmpty()) listUser.forEach {
+                        val username = it.login.orEmpty()
 
-                if (username.isNotEmpty()) {
-                    val userDetailResponse = userDataSource.userDetail(username)
-                    val userDetail = userDetailResponse.body()
-                    if (userDetail != null) listUserDetailResponse.add(userDetail)
+                        if (username.isNotEmpty()) {
+                            val userDetailResponse = userDataSource.userDetail(username)
+                            val userDetail = userDetailResponse.body()
+                            if (userDetail != null) listUserDetailResponse.add(userDetail)
+                        }
+
+                    }
                 }
-
             }
+
+            Type.REPOSITORY -> {}
+
+            Type.FOLLOWERS -> {
+                val listUserResponse = userDataSource.followers(
+                    userRequest.username.orEmpty(),
+                    userRequest.copy(page = page)
+                )
+                if (listUserResponse.isSuccessful)
+                    listUserDetailResponse.addAll(listUserResponse.body().orEmpty())
+            }
+
+            Type.FOLLOWING -> {
+                val listUserResponse = userDataSource.following(
+                    userRequest.username.orEmpty(),
+                    userRequest.copy(page = page)
+                )
+                if (listUserResponse.isSuccessful)
+                    listUserDetailResponse.addAll(listUserResponse.body().orEmpty())
+            }
+
+            else -> throw NullPointerException("Paging type is required.")
         }
 
         LoadResult.Page(
@@ -45,5 +71,9 @@ class UserPagingSource @Inject constructor(
             val anchorPage = state.closestPageToPosition(anchorPosition)
             anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
         }
+
+    enum class Type {
+        SEARCH, REPOSITORY, FOLLOWERS, FOLLOWING
+    }
 
 }
