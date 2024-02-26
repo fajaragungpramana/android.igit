@@ -31,7 +31,7 @@ interface IUserDataSource {
 
     @GET("users/{username}/repos")
     suspend fun repos(
-        @Path("repos") repo: String,
+        @Path("username") repo: String,
         @QueryMap userRequest: UserRequest
     ): Response<List<RepoResponse>>
 

@@ -23,6 +23,7 @@ data class Repo(
         }
 
         fun mapToObject(repo: RepoResponse) = Repo(
+            id = repo.id,
             name = repo.name,
             description = repo.description,
             starCount = repo.stargazersCount
