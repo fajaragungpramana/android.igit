@@ -58,6 +58,7 @@ class FollowFragment(private val login: String) : AppFragment<FragmentPopularity
         userAdapter = UserAdapter {}
 
         viewBinding.apply {
+            rvPopularity.hasFixedSize()
             rvPopularity.layoutManager = LinearLayoutManager(requireActivity())
             rvPopularity.adapter = userAdapter.withLoadStateFooter(LoadStateAdapter())
         }
