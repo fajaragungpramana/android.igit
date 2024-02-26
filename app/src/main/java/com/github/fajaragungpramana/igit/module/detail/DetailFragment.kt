@@ -14,6 +14,8 @@ import com.github.fajaragungpramana.igit.common.contract.AppState
 import com.github.fajaragungpramana.igit.core.data.remote.user.UserPagingSource
 import com.github.fajaragungpramana.igit.core.domain.user.model.User
 import com.github.fajaragungpramana.igit.databinding.FragmentDetailBinding
+import com.github.fajaragungpramana.igit.module.follow.FollowFragment
+import com.github.fajaragungpramana.igit.module.follower.FollowerFragment
 import com.github.fajaragungpramana.igit.module.main.MainActivity
 import com.github.fajaragungpramana.igit.module.popularity.PopularityFragment
 import com.github.fajaragungpramana.igit.widget.app.AppTabAdapter
@@ -57,8 +59,8 @@ class DetailFragment : AppFragment<FragmentDetailBinding>(), AppState {
     private fun initView() {
         val adapter = AppTabAdapter(requireActivity())
         adapter.addFragment(PopularityFragment(username, UserPagingSource.Type.REPOSITORY))
-        adapter.addFragment(PopularityFragment(username, UserPagingSource.Type.FOLLOWERS))
-        adapter.addFragment(PopularityFragment(username, UserPagingSource.Type.FOLLOWING))
+        adapter.addFragment(FollowerFragment(username))
+        adapter.addFragment(FollowFragment(username))
 
         val listTabIcon = intArrayOf(
             R.drawable.ic_repositories_black,

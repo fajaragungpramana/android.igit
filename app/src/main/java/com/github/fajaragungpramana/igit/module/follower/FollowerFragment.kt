@@ -1,4 +1,4 @@
-package com.github.fajaragungpramana.igit.module.popularity
+package com.github.fajaragungpramana.igit.module.follower
 
 import android.os.Bundle
 import android.view.ViewGroup
@@ -21,10 +21,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class PopularityFragment(private val username: String, private val type: UserPagingSource.Type) :
-    AppFragment<FragmentPopularityBinding>(), AppState {
+class FollowerFragment(private val login: String) : AppFragment<FragmentPopularityBinding>(), AppState {
 
-    private val viewModel: PopularityViewModel by viewModels()
+    private val viewModel: FollowerViewModel by viewModels()
 
     private lateinit var userAdapter: UserAdapter
 
@@ -35,16 +34,22 @@ class PopularityFragment(private val username: String, private val type: UserPag
         initUser()
         initUserLoadState()
 
-        val userRequest = UserRequest(username = username, perPage = 12, type = type)
-        viewModel.setEvent(PopularityEvent.ListUser(userRequest))
+        val userRequest = UserRequest(
+            username = login,
+            perPage = 12,
+            type = UserPagingSource.Type.FOLLOWERS
+        )
+        viewModel.setEvent(FollowerEvent.ListFollower(userRequest))
     }
 
     override fun onStateObserver() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.collectLatest {
+
                 when (it) {
-                    is PopularityState.UserData -> userAdapter.submitData(it.pagingData)
+                    is FollowerState.UserData -> userAdapter.submitData(it.pagingData)
                 }
+
             }
         }
     }
