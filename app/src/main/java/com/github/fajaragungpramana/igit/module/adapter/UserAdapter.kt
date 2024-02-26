@@ -3,6 +3,7 @@ package com.github.fajaragungpramana.igit.module.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.github.fajaragungpramana.igit.common.app.AppPagingAdapter
@@ -10,7 +11,7 @@ import com.github.fajaragungpramana.igit.common.app.AppRecyclerViewHolder
 import com.github.fajaragungpramana.igit.core.domain.user.model.User
 import com.github.fajaragungpramana.igit.databinding.ItemUserBinding
 
-class UserAdapter : AppPagingAdapter<ItemUserBinding, User, UserAdapter.ViewHolder>(User.diffUtil) {
+class UserAdapter(private val onItemClick: (User) -> Unit) : AppPagingAdapter<ItemUserBinding, User, UserAdapter.ViewHolder>(User.diffUtil) {
 
     override fun onViewBinding(viewGroup: ViewGroup): ItemUserBinding =
         ItemUserBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
@@ -24,7 +25,11 @@ class UserAdapter : AppPagingAdapter<ItemUserBinding, User, UserAdapter.ViewHold
                 transformations(CircleCropTransformation())
             }
             viewBinding.mtvUsername.text = item.username
+
+            viewBinding.mtvUserFullName.isVisible = !item.fullName.isNullOrEmpty()
             viewBinding.mtvUserFullName.text = item.fullName
+
+            viewBinding.root.setOnClickListener { onItemClick(item) }
         }
 
     }

@@ -4,4 +4,7 @@
     <string name="search_username">Cari nama</string>
     <string name="unknown">Tidak di ketahui</string>
     <string name="fajaragungpramana">fajaragungpramana</string>
+    <string name="repositories">Repositori</string>
+    <string name="followers">Pengikut</string>
+    <string name="following">Mengikuti</string>
 </resources>

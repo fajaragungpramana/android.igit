@@ -1,58 +1,66 @@
-package com.github.fajaragungpramana.igit.module.search
+package com.github.fajaragungpramana.igit.module.follower
 
 import android.os.Bundle
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.fajaragungpramana.igit.common.app.AppFragment
 import com.github.fajaragungpramana.igit.common.contract.AppState
 import com.github.fajaragungpramana.igit.core.data.remote.user.UserPagingSource
 import com.github.fajaragungpramana.igit.core.data.remote.user.request.UserRequest
-import com.github.fajaragungpramana.igit.databinding.SearchFragmentBinding
+import com.github.fajaragungpramana.igit.databinding.FragmentPopularityBinding
 import com.github.fajaragungpramana.igit.databinding.ShimmerItemUserBinding
-import com.github.fajaragungpramana.igit.widget.extension.setMargins
 import com.github.fajaragungpramana.igit.module.adapter.LoadStateAdapter
 import com.github.fajaragungpramana.igit.module.adapter.UserAdapter
-import com.github.fajaragungpramana.igit.module.main.MainActivity
+import com.github.fajaragungpramana.igit.widget.extension.setMargins
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SearchFragment : AppFragment<SearchFragmentBinding>(), AppState {
+class FollowerFragment(private val login: String) : AppFragment<FragmentPopularityBinding>(), AppState {
 
-    private val viewModel: SearchViewModel by viewModels()
+    private val viewModel: FollowerViewModel by viewModels()
 
     private lateinit var userAdapter: UserAdapter
 
-    override fun onViewBinding(container: ViewGroup?): SearchFragmentBinding =
-        SearchFragmentBinding.inflate(layoutInflater, container, false)
+    override fun onViewBinding(container: ViewGroup?): FragmentPopularityBinding =
+        FragmentPopularityBinding.inflate(layoutInflater)
 
     override fun onViewCreated(savedInstanceState: Bundle?) {
-        initView()
         initUser()
-        initSearch()
         initUserLoadState()
+
+        val userRequest = UserRequest(
+            username = login,
+            perPage = 12,
+            type = UserPagingSource.Type.FOLLOWERS
+        )
+        viewModel.setEvent(FollowerEvent.ListFollower(userRequest))
     }
 
     override fun onStateObserver() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.collectLatest {
+
                 when (it) {
-                    is SearchState.UserData -> userAdapter.submitData(it.pagingData)
+                    is FollowerState.UserData -> userAdapter.submitData(it.pagingData)
                 }
+
             }
         }
     }
 
-    private fun initView() {
-        (requireActivity() as MainActivity).apply {
-            supportActionBar?.setDisplayHomeAsUpEnabled(false)
+    private fun initUser() {
+        userAdapter = UserAdapter {}
+
+        viewBinding.apply {
+            rvPopularity.hasFixedSize()
+            rvPopularity.layoutManager = LinearLayoutManager(requireActivity())
+            rvPopularity.adapter = userAdapter.withLoadStateFooter(LoadStateAdapter())
         }
     }
 
@@ -61,7 +69,7 @@ class SearchFragment : AppFragment<SearchFragmentBinding>(), AppState {
             val isLoading = it.refresh is LoadState.Loading
             viewBinding.apply {
                 sflShimmerItemUser.isVisible = isLoading
-                rvUser.isVisible = !isLoading
+                rvPopularity.isVisible = !isLoading
 
                 if (isLoading) {
                     llShimmerItemUser.removeAllViews()
@@ -76,25 +84,6 @@ class SearchFragment : AppFragment<SearchFragmentBinding>(), AppState {
                 } else
                     sflShimmerItemUser.stopShimmer()
             }
-        }
-    }
-
-    private fun initSearch() {
-        val userRequest = UserRequest(perPage = 12, type = UserPagingSource.Type.SEARCH)
-        viewBinding.tieSearchUsername.addTextChangedListener {
-            viewModel.setEvent(SearchEvent.SearchUser(userRequest.copy(q = it.toString())))
-        }
-    }
-
-    private fun initUser() {
-        userAdapter = UserAdapter {
-            val action = SearchFragmentDirections.actionSearchFragmentToDetailFragment(it.username)
-            findNavController().navigate(action)
-        }
-
-        viewBinding.apply {
-            rvUser.layoutManager = LinearLayoutManager(requireActivity())
-            rvUser.adapter = userAdapter.withLoadStateFooter(LoadStateAdapter())
         }
     }
 

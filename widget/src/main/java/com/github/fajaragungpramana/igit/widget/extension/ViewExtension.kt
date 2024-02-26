@@ -1,4 +1,4 @@
-package com.github.fajaragungpramana.igit.extension
+package com.github.fajaragungpramana.igit.widget.extension
 
 import android.content.Context
 import android.util.TypedValue
