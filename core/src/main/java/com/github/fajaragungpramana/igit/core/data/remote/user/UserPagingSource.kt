@@ -34,8 +34,6 @@ class UserPagingSource @Inject constructor(
                 }
             }
 
-            Type.REPOSITORY -> {}
-
             Type.FOLLOWERS -> {
                 val listUserResponse = userDataSource.followers(
                     userRequest.username.orEmpty(),
@@ -73,7 +71,7 @@ class UserPagingSource @Inject constructor(
         }
 
     enum class Type {
-        SEARCH, REPOSITORY, FOLLOWERS, FOLLOWING
+        SEARCH, FOLLOWERS, FOLLOWING
     }
 
 }

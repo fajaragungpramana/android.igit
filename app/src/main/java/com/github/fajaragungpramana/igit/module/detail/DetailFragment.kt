@@ -11,13 +11,12 @@ import coil.transform.CircleCropTransformation
 import com.github.fajaragungpramana.igit.R
 import com.github.fajaragungpramana.igit.common.app.AppFragment
 import com.github.fajaragungpramana.igit.common.contract.AppState
-import com.github.fajaragungpramana.igit.core.data.remote.user.UserPagingSource
 import com.github.fajaragungpramana.igit.core.domain.user.model.User
 import com.github.fajaragungpramana.igit.databinding.FragmentDetailBinding
 import com.github.fajaragungpramana.igit.module.follow.FollowFragment
 import com.github.fajaragungpramana.igit.module.follower.FollowerFragment
 import com.github.fajaragungpramana.igit.module.main.MainActivity
-import com.github.fajaragungpramana.igit.module.popularity.PopularityFragment
+import com.github.fajaragungpramana.igit.module.repo.RepoFragment
 import com.github.fajaragungpramana.igit.widget.app.AppTabAdapter
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
@@ -30,7 +29,7 @@ class DetailFragment : AppFragment<FragmentDetailBinding>(), AppState {
 
     private val viewModel: DetailViewModel by viewModels()
 
-    private val username by lazy { arguments?.getString("login").orEmpty() }
+    private val login by lazy { arguments?.getString("login").orEmpty() }
 
     override fun onViewBinding(container: ViewGroup?): FragmentDetailBinding =
         FragmentDetailBinding.inflate(layoutInflater)
@@ -38,7 +37,7 @@ class DetailFragment : AppFragment<FragmentDetailBinding>(), AppState {
     override fun onViewCreated(savedInstanceState: Bundle?) {
         initView()
 
-        viewModel.setEvent(DetailEvent.User(username = username))
+        viewModel.setEvent(DetailEvent.User(username = login))
     }
 
     override fun onStateObserver() {
@@ -58,9 +57,9 @@ class DetailFragment : AppFragment<FragmentDetailBinding>(), AppState {
 
     private fun initView() {
         val adapter = AppTabAdapter(requireActivity())
-        adapter.addFragment(PopularityFragment(username, UserPagingSource.Type.REPOSITORY))
-        adapter.addFragment(FollowerFragment(username))
-        adapter.addFragment(FollowFragment(username))
+        adapter.addFragment(RepoFragment(login))
+        adapter.addFragment(FollowerFragment(login))
+        adapter.addFragment(FollowFragment(login))
 
         val listTabIcon = intArrayOf(
             R.drawable.ic_repositories_black,

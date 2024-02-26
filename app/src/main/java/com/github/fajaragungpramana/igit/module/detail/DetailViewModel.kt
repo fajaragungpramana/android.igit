@@ -30,7 +30,7 @@ class DetailViewModel @Inject constructor(private val userUseCase: UserUseCase) 
     private fun getUser(username: String): Job = viewModelScope.launch {
         userUseCase.getUser(username).collectLatest {
             when (it) {
-                is AppResult.Success -> _state.send(DetailState.UserData(User.mapToObject(it.data)))
+                is AppResult.Success -> _state.send(DetailState.UserData(it.data ?: User()))
                 is AppResult.Error -> _state.send(DetailState.MessageData(it.message))
             }
         }
