@@ -11,39 +11,31 @@
         android:background="@null"
         app:elevation="0dp">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/mtl_search"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dimen_16dp"
+            android:hint="@string/search_username"
+            app:boxCornerRadiusBottomEnd="@dimen/dimen_16dp"
+            app:boxCornerRadiusBottomStart="@dimen/dimen_16dp"
+            app:boxCornerRadiusTopEnd="@dimen/dimen_16dp"
+            app:boxCornerRadiusTopStart="@dimen/dimen_16dp"
+            app:endIconMode="clear_text"
+            app:expandedHintEnabled="false"
             app:layout_scrollFlags="scroll|enterAlways|snap">
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tie_search_username"
+                style="@style/TextRegular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/dimen_16dp"
-                android:layout_marginVertical="@dimen/dimen_8dp"
-                android:hint="@string/search_username"
-                app:boxCornerRadiusBottomEnd="@dimen/dimen_16dp"
-                app:boxCornerRadiusBottomStart="@dimen/dimen_16dp"
-                app:boxCornerRadiusTopEnd="@dimen/dimen_16dp"
-                app:boxCornerRadiusTopStart="@dimen/dimen_16dp"
-                app:endIconMode="clear_text"
-                app:expandedHintEnabled="false">
+                android:drawableStart="@drawable/ic_search_black"
+                android:drawablePadding="@dimen/dimen_8dp"
+                android:hint="@string/fajaragungpramana"
+                android:textColor="@android:color/black" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/tie_search_username"
-                    style="@style/TextRegular"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_search_black"
-                    android:drawablePadding="@dimen/dimen_8dp"
-                    android:hint="@string/fajaragungpramana"
-                    android:textColor="@android:color/black" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-        </com.google.android.material.appbar.MaterialToolbar>
+        </com.google.android.material.textfield.TextInputLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 

@@ -6,7 +6,12 @@ import com.github.fajaragungpramana.igit.core.data.remote.user.response.UserDeta
 data class User(
     var avatar: String? = null,
     var username: String? = null,
-    var fullName: String? = null
+    var fullName: String? = null,
+    var bio: String? = null,
+    var email: String? = null,
+    var totalRepository: Int? = null,
+    var totalFollower: Int? = null,
+    var totalFollowing: Int? = null
 ) {
 
     companion object {
@@ -24,7 +29,12 @@ data class User(
         fun mapToObject(userDetail: UserDetailResponse?) = User(
             avatar = userDetail?.avatarUrl,
             username = userDetail?.login,
-            fullName = userDetail?.name
+            fullName = userDetail?.name,
+            bio = userDetail?.bio,
+            email = userDetail?.email,
+            totalRepository = userDetail?.publicRepos,
+            totalFollower = userDetail?.followers,
+            totalFollowing = userDetail?.following
         )
 
     }
