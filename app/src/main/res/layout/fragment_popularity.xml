@@ -13,13 +13,13 @@
         tools:listitem="@layout/item_user" />
 
     <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/sfl_shimmer_item_user"
+        android:id="@+id/sfl_shimmer_item"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone">
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/ll_shimmer_item_user"
+            android:id="@+id/ll_shimmer_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" />

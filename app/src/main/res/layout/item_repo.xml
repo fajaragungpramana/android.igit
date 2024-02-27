@@ -45,4 +45,10 @@
         android:textSize="@dimen/text_12sp"
         tools:text="@string/unknown" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        android:background="@android:color/darker_gray" />
+
 </androidx.appcompat.widget.LinearLayoutCompat>
