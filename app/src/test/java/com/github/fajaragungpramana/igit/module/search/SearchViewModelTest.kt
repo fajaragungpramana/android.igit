@@ -2,13 +2,11 @@ package com.github.fajaragungpramana.igit.module.search
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.paging.PagingData
-import androidx.paging.map
 import com.github.fajaragungpramana.igit.core.data.remote.user.request.UserRequest
 import com.github.fajaragungpramana.igit.core.domain.user.UserInteractor
 import com.github.fajaragungpramana.igit.core.domain.user.model.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.TestDispatcher
