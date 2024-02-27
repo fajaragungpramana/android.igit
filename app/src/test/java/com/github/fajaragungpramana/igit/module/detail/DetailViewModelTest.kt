@@ -2,7 +2,7 @@ package com.github.fajaragungpramana.igit.module.detail
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.github.fajaragungpramana.igit.core.app.AppResult
-import com.github.fajaragungpramana.igit.core.domain.user.UserInteractor
+import com.github.fajaragungpramana.igit.core.domain.user.UserUseCase
 import com.github.fajaragungpramana.igit.core.domain.user.model.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -32,7 +32,7 @@ class DetailViewModelTest {
     val instantTaskExecutor = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var userInteractor: UserInteractor
+    private lateinit var userUseCase: UserUseCase
 
     private lateinit var viewModel: DetailViewModel
 
@@ -41,7 +41,7 @@ class DetailViewModelTest {
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
-        viewModel = DetailViewModel(userInteractor)
+        viewModel = DetailViewModel(userUseCase)
     }
 
     @Before
@@ -63,7 +63,7 @@ class DetailViewModelTest {
             bio = "Tech|Mobile Engineer"
         )
         val request = "fajaragungpramana"
-        `when`(userInteractor.getUser(request)).thenReturn(
+        `when`(userUseCase.getUser(request)).thenReturn(
             channelFlow {
                 send(
                     AppResult.Success(

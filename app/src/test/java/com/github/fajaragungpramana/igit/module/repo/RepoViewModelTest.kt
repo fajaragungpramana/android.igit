@@ -1,16 +1,14 @@
-package com.github.fajaragungpramana.igit.module.search
+package com.github.fajaragungpramana.igit.module.repo
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.paging.PagingData
-import com.github.fajaragungpramana.igit.core.data.remote.user.UserPagingSource
 import com.github.fajaragungpramana.igit.core.data.remote.user.request.UserRequest
 import com.github.fajaragungpramana.igit.core.domain.user.UserUseCase
-import com.github.fajaragungpramana.igit.core.domain.user.model.User
+import com.github.fajaragungpramana.igit.core.domain.user.model.Repo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
@@ -28,7 +26,7 @@ import org.mockito.junit.MockitoJUnitRunner
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class SearchViewModelTest {
+class RepoViewModelTest {
 
     @get:Rule
     val instantTaskExecutor = InstantTaskExecutorRule()
@@ -36,14 +34,14 @@ class SearchViewModelTest {
     @Mock
     private lateinit var userUseCase: UserUseCase
 
-    private lateinit var viewModel: SearchViewModel
+    private lateinit var viewModel: RepoViewModel
 
-    private val testDispatcher: TestDispatcher = UnconfinedTestDispatcher()
+    private val testDispatcher = UnconfinedTestDispatcher()
 
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
-        viewModel = SearchViewModel(userUseCase)
+        viewModel = RepoViewModel(userUseCase)
     }
 
     @Before
@@ -57,29 +55,26 @@ class SearchViewModelTest {
     }
 
     @Test
-    fun `search user success should set state to UserData`() = runTest {
+    fun `getListRepo success should set state to RepoData`() = runTest {
         val expected = PagingData.from(
             listOf(
-                User(
-                    avatar = "https://avatars.githubusercontent.com/u/47925662?s=400&u=e15d06caa4f49c9427a080c02f03b86f250f8a90&v=4",
-                    username = "fajaragungpramana",
-                    fullName = "Fajar Agung Pramana"
+                Repo(
+                    id = 1,
+                    name = "android.ex",
+                    description = "App for management money expenses",
+                    starCount = 1
                 )
             )
         )
-        val request = UserRequest(
-            q = "fajaragungpramana",
-            page = 1,
-            perPage = 12,
-            type = UserPagingSource.Type.SEARCH
-        )
-        `when`(userUseCase.getListUser(request)).thenReturn(channelFlow { send(expected) })
+        val request = UserRequest(username = "fajaragungpramana", page = 1, perPage = 12)
+        `when`(userUseCase.getListRepo(request)).thenReturn(channelFlow { send(expected) })
 
-        viewModel.setEvent(SearchEvent.SearchUser(request))
+        viewModel.setEvent(RepoEvent.ListRepo(request))
 
         val result = viewModel.state.first()
-        Assert.assertTrue(result is SearchState.UserData)
-        Assert.assertEquals(expected, (result as SearchState.UserData).pagingData)
+
+        Assert.assertTrue(result is RepoState.RepoData)
+        Assert.assertEquals(expected, (result as RepoState.RepoData).pagingData)
     }
 
 }
