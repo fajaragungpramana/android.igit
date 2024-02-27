@@ -28,9 +28,13 @@ class DetailViewModel @Inject constructor(private val userUseCase: UserUseCase) 
     }
 
     private fun getUser(username: String): Job = viewModelScope.launch {
+        _state.send(DetailState.UserLoading(true))
         userUseCase.getUser(username).collectLatest {
             when (it) {
-                is AppResult.Success -> _state.send(DetailState.UserData(it.data ?: User()))
+                is AppResult.Success -> {
+                    _state.send(DetailState.UserData(it.data ?: User()))
+                    _state.send(DetailState.UserLoading(false))
+                }
                 is AppResult.Error -> _state.send(DetailState.MessageData(it.message))
             }
         }
