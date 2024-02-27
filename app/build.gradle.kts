@@ -54,6 +54,7 @@ dependencies {
     implementation(Dependency.AndroidX.ACTIVITY_KTX)
     implementation(Dependency.AndroidX.NAVIGATION_FRAGMENT_KTX)
     implementation(Dependency.AndroidX.NAVIGATION_UI_KTX)
+    implementation(Dependency.AndroidX.ESPRESSO_IDLING_RESOURCE)
 
     implementation(Dependency.Common.COIL)
     implementation(Dependency.Common.LOTTIE)
