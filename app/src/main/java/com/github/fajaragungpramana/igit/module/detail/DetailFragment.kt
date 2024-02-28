@@ -66,9 +66,9 @@ class DetailFragment : AppFragment<FragmentDetailBinding>(), AppState {
 
     private fun initView() {
         val adapter = AppTabAdapter(requireActivity())
-        adapter.addFragment(RepoFragment(login))
-        adapter.addFragment(FollowerFragment(login))
-        adapter.addFragment(FollowFragment(login))
+        adapter.addFragment(RepoFragment.instance(login))
+        adapter.addFragment(FollowerFragment.instance(login))
+        adapter.addFragment(FollowFragment.instance(login))
 
         val listTabIcon = intArrayOf(
             R.drawable.ic_repositories_black,

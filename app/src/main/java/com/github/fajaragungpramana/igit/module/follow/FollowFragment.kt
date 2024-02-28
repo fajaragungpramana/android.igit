@@ -21,7 +21,8 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class FollowFragment(private val login: String) : AppFragment<FragmentPopularityBinding>(), AppState {
+class FollowFragment : AppFragment<FragmentPopularityBinding>(),
+    AppState {
 
     private val viewModel: FollowViewModel by viewModels()
 
@@ -35,7 +36,7 @@ class FollowFragment(private val login: String) : AppFragment<FragmentPopularity
         initUserLoadState()
 
         val userRequest = UserRequest(
-            username = login,
+            username = arguments?.getString(BUNDLE_LOGIN),
             perPage = 12,
             type = UserPagingSource.Type.FOLLOWING
         )
@@ -85,6 +86,22 @@ class FollowFragment(private val login: String) : AppFragment<FragmentPopularity
                     sflShimmerItem.stopShimmer()
             }
         }
+    }
+
+    companion object {
+
+        private const val BUNDLE_LOGIN = "login"
+
+        fun instance(login: String): FollowFragment {
+            val bundle = Bundle()
+            bundle.putString(BUNDLE_LOGIN, login)
+
+            val fragment = FollowFragment()
+            fragment.arguments = bundle
+
+            return fragment
+        }
+
     }
 
 }

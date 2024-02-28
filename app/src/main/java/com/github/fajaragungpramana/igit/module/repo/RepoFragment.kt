@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class RepoFragment(private val login: String) : AppFragment<FragmentPopularityBinding>(), AppState {
+class RepoFragment: AppFragment<FragmentPopularityBinding>(), AppState {
 
     private val viewModel: RepoViewModel by viewModels()
 
@@ -33,7 +33,7 @@ class RepoFragment(private val login: String) : AppFragment<FragmentPopularityBi
         initRepo()
         initRepoLoadState()
 
-        val userRequest = UserRequest(username = login, perPage = 12)
+        val userRequest = UserRequest(username = arguments?.getString(BUNDLE_LOGIN), perPage = 12)
         viewModel.setEvent(RepoEvent.ListRepo(userRequest))
     }
 
@@ -78,6 +78,22 @@ class RepoFragment(private val login: String) : AppFragment<FragmentPopularityBi
                     sflShimmerItem.stopShimmer()
             }
         }
+    }
+
+    companion object {
+
+        private const val BUNDLE_LOGIN = "login"
+
+        fun instance(login: String): RepoFragment {
+            val bundle = Bundle()
+            bundle.putString(BUNDLE_LOGIN, login)
+
+            val fragment = RepoFragment()
+            fragment.arguments = bundle
+
+            return fragment
+        }
+
     }
 
 }
