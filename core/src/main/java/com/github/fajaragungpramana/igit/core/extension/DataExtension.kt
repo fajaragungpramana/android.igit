@@ -2,11 +2,10 @@ package com.github.fajaragungpramana.igit.core.extension
 
 import com.github.fajaragungpramana.igit.core.app.AppResult
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.flowOn
 
-suspend inline fun <T : Any> connection(crossinline run: suspend () -> AppResult<T>): Flow<AppResult<T>> = channelFlow {
+suspend inline fun <T : Any> connection(crossinline run: suspend () -> AppResult<T>) = channelFlow {
     try {
         send(run())
     } catch (e: Exception) {
