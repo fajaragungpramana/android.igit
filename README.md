@@ -1,4 +1,5 @@
 # iGit
+[![Android CI Debug](https://github.com/fajaragungpramana/android.igit/actions/workflows/android_ci.yml/badge.svg)](https://github.com/fajaragungpramana/android.igit/actions/workflows/android_ci.yml)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)</br>
 App for find github user in `Android`
 
@@ -38,6 +39,9 @@ api.base_url_debug="https://api.github.com/"
 api.token_debug="YOUR_GITHUB_TOKEN_HERE"
 ```
 - Build and Run project on android device or simulator
+
+## Preview
+- Android Simulator (Pixel) : [HERE](https://drive.google.com/drive/folders/1Q5r2Z2zJnrkaqg1pD4Fh3aJickK7Es_x?usp=sharing)
 
 ## License
 Copyright 2024 Fajar Agung Pramana
