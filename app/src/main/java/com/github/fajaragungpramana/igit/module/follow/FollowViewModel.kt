@@ -22,11 +22,11 @@ class FollowViewModel @Inject constructor(private val userUseCase: UserUseCase) 
 
     fun setEvent(event: FollowEvent) {
         when (event) {
-            is FollowEvent.ListFollow -> getListUser(event.userRequest)
+            is FollowEvent.ListFollow -> getListFollow(event.userRequest)
         }
     }
 
-    private fun getListUser(userRequest: UserRequest): Job = viewModelScope.launch {
+    private fun getListFollow(userRequest: UserRequest): Job = viewModelScope.launch {
         userUseCase.getListUser(userRequest).collectLatest {
             _state.send(FollowState.UserData(it))
         }

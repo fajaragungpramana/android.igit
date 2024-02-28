@@ -2,6 +2,7 @@ package com.github.fajaragungpramana.igit.module.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.github.fajaragungpramana.igit.constant.EspressoIdlingResource
 import com.github.fajaragungpramana.igit.core.app.AppResult
 import com.github.fajaragungpramana.igit.core.domain.user.UserUseCase
 import com.github.fajaragungpramana.igit.core.domain.user.model.User
@@ -28,9 +29,18 @@ class DetailViewModel @Inject constructor(private val userUseCase: UserUseCase) 
     }
 
     private fun getUser(username: String): Job = viewModelScope.launch {
+        EspressoIdlingResource.increment()
+
+        _state.send(DetailState.UserLoading(true))
         userUseCase.getUser(username).collectLatest {
+            if (!EspressoIdlingResource.idlingResource.isIdleNow)
+                EspressoIdlingResource.decrement()
+
             when (it) {
-                is AppResult.Success -> _state.send(DetailState.UserData(it.data ?: User()))
+                is AppResult.Success -> {
+                    _state.send(DetailState.UserData(it.data ?: User()))
+                    _state.send(DetailState.UserLoading(false))
+                }
                 is AppResult.Error -> _state.send(DetailState.MessageData(it.message))
             }
         }

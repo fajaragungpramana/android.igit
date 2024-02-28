@@ -12,6 +12,7 @@ object Dependency {
         const val UI_AUTOMATOR = "androidx.test.uiautomator:uiautomator:2.3.0-rc01"
         const val ESPRESSO_CORE = "androidx.test.espresso:espresso-core:3.5.1"
         const val ESPRESSO_CONTRIB = "androidx.test.espresso:espresso-contrib:3.5.1"
+        const val ESPRESSO_IDLING_RESOURCE = "androidx.test.espresso:espresso-idling-resource:3.5.1"
         const val TEST_CORE_KTX = "androidx.test:core-ktx:1.5.0"
         const val RUNNER = "androidx.test:runner:1.5.2"
         const val RULES = "androidx.test:rules:1.5.0"

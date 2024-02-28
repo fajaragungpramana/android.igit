@@ -32,7 +32,7 @@ class UserInteractor @Inject constructor(private val userRepository: IUserReposi
         }
     }.flowOn(Dispatchers.IO)
 
-    override suspend fun getListRepo(userRequest: UserRequest): Flow<PagingData<Repo>> = channelFlow<PagingData<Repo>> {
+    override suspend fun getListRepo(userRequest: UserRequest): Flow<PagingData<Repo>> = channelFlow {
         userRepository.getListRepo(userRequest).collectLatest {
             send(it.map { response -> Repo.mapToObject(response) })
         }

@@ -44,6 +44,15 @@ class DetailFragment : AppFragment<FragmentDetailBinding>(), AppState {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.collectLatest {
                 when (it) {
+                    is DetailState.UserLoading -> {
+                        viewBinding.apply {
+                            sflShimmerUser.isVisible = it.isLoading
+                            llcUser.isVisible = !it.isLoading
+
+                            if (it.isLoading) sflShimmerUser.startShimmer() else sflShimmerUser.stopShimmer()
+                        }
+                    }
+
                     is DetailState.UserData -> setUser(it.user)
                     is DetailState.MessageData -> Snackbar.make(
                         viewBinding.root,
@@ -57,9 +66,9 @@ class DetailFragment : AppFragment<FragmentDetailBinding>(), AppState {
 
     private fun initView() {
         val adapter = AppTabAdapter(requireActivity())
-        adapter.addFragment(RepoFragment(login))
-        adapter.addFragment(FollowerFragment(login))
-        adapter.addFragment(FollowFragment(login))
+        adapter.addFragment(RepoFragment.instance(login))
+        adapter.addFragment(FollowerFragment.instance(login))
+        adapter.addFragment(FollowFragment.instance(login))
 
         val listTabIcon = intArrayOf(
             R.drawable.ic_repositories_black,

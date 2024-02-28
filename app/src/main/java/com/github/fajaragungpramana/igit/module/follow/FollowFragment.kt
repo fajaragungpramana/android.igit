@@ -21,7 +21,8 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class FollowFragment(private val login: String) : AppFragment<FragmentPopularityBinding>(), AppState {
+class FollowFragment : AppFragment<FragmentPopularityBinding>(),
+    AppState {
 
     private val viewModel: FollowViewModel by viewModels()
 
@@ -35,7 +36,7 @@ class FollowFragment(private val login: String) : AppFragment<FragmentPopularity
         initUserLoadState()
 
         val userRequest = UserRequest(
-            username = login,
+            username = arguments?.getString(BUNDLE_LOGIN),
             perPage = 12,
             type = UserPagingSource.Type.FOLLOWING
         )
@@ -68,23 +69,39 @@ class FollowFragment(private val login: String) : AppFragment<FragmentPopularity
         userAdapter.addLoadStateListener {
             val isLoading = it.refresh is LoadState.Loading
             viewBinding.apply {
-                sflShimmerItemUser.isVisible = isLoading
+                sflShimmerItem.isVisible = isLoading
                 rvPopularity.isVisible = !isLoading
 
                 if (isLoading) {
-                    llShimmerItemUser.removeAllViews()
-                    sflShimmerItemUser.startShimmer()
+                    llShimmerItem.removeAllViews()
+                    sflShimmerItem.startShimmer()
 
                     for (i in 1..5) {
                         val shimmerItemUser = ShimmerItemUserBinding.inflate(layoutInflater).root
-                        llShimmerItemUser.addView(shimmerItemUser)
+                        llShimmerItem.addView(shimmerItemUser)
 
                         shimmerItemUser.setMargins(16f, 16f, 16f, 16f)
                     }
                 } else
-                    sflShimmerItemUser.stopShimmer()
+                    sflShimmerItem.stopShimmer()
             }
         }
+    }
+
+    companion object {
+
+        private const val BUNDLE_LOGIN = "login"
+
+        fun instance(login: String): FollowFragment {
+            val bundle = Bundle()
+            bundle.putString(BUNDLE_LOGIN, login)
+
+            val fragment = FollowFragment()
+            fragment.arguments = bundle
+
+            return fragment
+        }
+
     }
 
 }
