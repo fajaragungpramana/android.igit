@@ -2,6 +2,7 @@ package com.github.fajaragungpramana.igit.module.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.github.fajaragungpramana.igit.constant.EspressoIdlingResource
 import com.github.fajaragungpramana.igit.core.data.remote.user.request.UserRequest
 import com.github.fajaragungpramana.igit.core.domain.user.UserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,7 +31,11 @@ class SearchViewModel @Inject constructor(private val userUseCase: UserUseCase) 
 
     @OptIn(FlowPreview::class)
     private fun getListUser(userRequest: UserRequest): Job = viewModelScope.launch {
+        EspressoIdlingResource.increment()
+
         userUseCase.getListUser(userRequest).debounce(1000).collectLatest {
+            if (!EspressoIdlingResource.idlingResource.isIdleNow) EspressoIdlingResource.decrement()
+
             _state.send(SearchState.UserData(it))
         }
     }
