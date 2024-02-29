@@ -1,6 +1,7 @@
 package com.github.fajaragungpramana.igit.core.domain.user.model
 
 import androidx.recyclerview.widget.DiffUtil
+import com.github.fajaragungpramana.igit.core.data.local.sql.entity.UserEntity
 import com.github.fajaragungpramana.igit.core.data.remote.user.response.UserDetailResponse
 
 data class User(
@@ -26,7 +27,7 @@ data class User(
 
         }
 
-        fun mapToObject(userDetail: UserDetailResponse?) = User(
+        fun mapFromResponseToList(userDetail: UserDetailResponse?) = User(
             avatar = userDetail?.avatarUrl,
             username = userDetail?.login,
             fullName = userDetail?.name,
@@ -36,6 +37,21 @@ data class User(
             totalFollower = userDetail?.followers,
             totalFollowing = userDetail?.following
         )
+
+        fun mapFromEntityToList(listUserEntity: List<UserEntity>): List<User> {
+            val list = arrayListOf<User>()
+            listUserEntity.forEach {
+                list.add(
+                    User(
+                        avatar = it.avatar,
+                        username = it.username,
+                        fullName = it.fullName
+                    )
+                )
+            }
+
+            return list
+        }
 
     }
 

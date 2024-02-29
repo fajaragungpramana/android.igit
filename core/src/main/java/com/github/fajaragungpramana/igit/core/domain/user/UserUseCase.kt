@@ -15,4 +15,6 @@ interface UserUseCase {
 
     suspend fun getListRepo(userRequest: UserRequest): Flow<PagingData<Repo>>
 
+    suspend fun getListFavoriteUser(): Flow<AppResult<PagingData<User>>>
+
 }
