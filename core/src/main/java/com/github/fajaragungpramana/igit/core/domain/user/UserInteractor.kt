@@ -4,6 +4,7 @@ import androidx.paging.PagingData
 import androidx.paging.map
 import com.github.fajaragungpramana.igit.core.app.AppResult
 import com.github.fajaragungpramana.igit.core.data.local.sql.ISqlRepository
+import com.github.fajaragungpramana.igit.core.data.local.sql.entity.UserEntity
 import com.github.fajaragungpramana.igit.core.data.remote.user.IUserRepository
 import com.github.fajaragungpramana.igit.core.data.remote.user.request.UserRequest
 import com.github.fajaragungpramana.igit.core.domain.user.model.Repo
@@ -52,9 +53,28 @@ class UserInteractor @Inject constructor(
                         val listUser = User.mapFromEntityToList(it.data.orEmpty())
                         send(AppResult.Success(PagingData.from(listUser)))
                     }
+
                     is AppResult.Error -> send(AppResult.Error(it.message))
                 }
             }
         }.flowOn(Dispatchers.IO)
+
+    override suspend fun isFavoriteUser(username: String): Flow<Boolean> = channelFlow {
+        sqlRepository.getUser(username).collectLatest {
+            when (it) {
+                is AppResult.Success -> send(it.data != null)
+                is AppResult.Error -> send(false)
+            }
+        }
+    }
+
+    override suspend fun saveFavoriteUser(userEntity: UserEntity): Flow<Unit> = channelFlow {
+        sqlRepository.saveUser(userEntity).collectLatest {
+            when (it) {
+                is AppResult.Success -> send(it.data ?: Unit)
+                is AppResult.Error -> send(Unit)
+            }
+        }
+    }
 
 }

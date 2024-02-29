@@ -11,6 +11,9 @@ interface UserDao {
     @Query("SELECT * FROM users")
     suspend fun getAll(): List<UserEntity>
 
+    @Query("SELECT * FROM users WHERE username IN (:username) LIMIT 1")
+    fun findByUsername(username: String): UserEntity
+
     @Insert
     suspend fun save(users: UserEntity)
 

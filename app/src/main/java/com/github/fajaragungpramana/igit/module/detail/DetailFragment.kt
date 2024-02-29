@@ -1,6 +1,7 @@
 package com.github.fajaragungpramana.igit.module.detail
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.isVisible
@@ -40,6 +41,16 @@ class DetailFragment : AppFragment<FragmentDetailBinding>(), AppState {
         viewModel.setEvent(DetailEvent.User(username = login))
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.item_add_favorite -> {
+
+            }
+        }
+
+        return true
+    }
+
     override fun onStateObserver() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.collectLatest {
@@ -65,6 +76,8 @@ class DetailFragment : AppFragment<FragmentDetailBinding>(), AppState {
     }
 
     private fun initView() {
+        setHasOptionsMenu(true)
+
         val adapter = AppTabAdapter(requireActivity())
         adapter.addFragment(RepoFragment.instance(login))
         adapter.addFragment(FollowerFragment.instance(login))

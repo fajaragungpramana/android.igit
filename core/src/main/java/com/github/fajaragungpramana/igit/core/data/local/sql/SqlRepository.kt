@@ -13,4 +13,12 @@ class SqlRepository @Inject constructor(private val userDao: UserDao) : ISqlRepo
         AppResult.Success(userDao.getAll())
     }
 
+    override suspend fun getUser(username: String): Flow<AppResult<UserEntity>> = connection {
+        AppResult.Success(userDao.findByUsername(username))
+    }
+
+    override suspend fun saveUser(userEntity: UserEntity): Flow<AppResult<Unit>> = connection {
+        AppResult.Success(userDao.save(userEntity))
+    }
+
 }

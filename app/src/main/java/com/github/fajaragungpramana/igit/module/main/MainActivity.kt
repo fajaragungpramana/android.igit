@@ -51,13 +51,15 @@ class MainActivity : AppActivity<ActivityMainBinding>() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.home_toolbar, menu)
+        menuInflater.inflate(R.menu.main_toolbar, menu)
         return true
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
         navigationController.navController.addOnDestinationChangedListener { _, destination, _ ->
             menu?.findItem(R.id.item_favorite)?.isVisible = destination.id == R.id.search_fragment
+            menu?.findItem(R.id.item_add_favorite)?.isVisible =
+                destination.id == R.id.detail_fragment
         }
         return super.onPrepareOptionsMenu(menu)
     }
