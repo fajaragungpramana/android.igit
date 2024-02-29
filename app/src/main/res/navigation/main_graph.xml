@@ -1,28 +1,36 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--suppress NavigationFile -->
+<?xml version="1.0" encoding="utf-8"?><!--suppress NavigationFile -->
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_graph"
-    app:startDestination="@id/searchFragment">
+    app:startDestination="@id/search_fragment">
 
     <fragment
-        android:id="@+id/searchFragment"
+        android:id="@+id/search_fragment"
         android:name="com.github.fajaragungpramana.igit.module.search.SearchFragment"
         tools:layout="@layout/search_fragment">
         <action
             android:id="@+id/action_searchFragment_to_detailFragment"
-            app:destination="@id/detailFragment">
+            app:destination="@id/detail_fragment">
             <argument
                 android:name="login"
                 app:argType="string"
                 app:nullable="true" />
         </action>
+        <action
+            android:id="@+id/action_searchFragment_to_favoriteFragment"
+            app:destination="@id/favorite_fragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/detailFragment"
+        android:id="@+id/detail_fragment"
         android:name="com.github.fajaragungpramana.igit.module.detail.DetailFragment"
-        tools:layout="@layout/fragment_detail" />
+        tools:layout="@layout/fragment_detail" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/favorite_fragment"
+        android:name="com.github.fajaragungpramana.igit.module.favorite.FavoriteFragment"
+        tools:layout="@layout/fragment_favorite" />
 
 </navigation>

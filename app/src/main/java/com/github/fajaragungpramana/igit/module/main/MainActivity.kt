@@ -3,6 +3,7 @@ package com.github.fajaragungpramana.igit.module.main
 import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.os.Handler
+import android.view.Menu
 import android.view.View
 import android.view.animation.AnticipateInterpolator
 import androidx.core.animation.doOnEnd
@@ -15,6 +16,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppActivity<ActivityMainBinding>() {
+
+    private val navigationController by lazy { supportFragmentManager.findFragmentById(R.id.fcv_main_container) as NavHostFragment }
 
     private var keep = true
 
@@ -47,15 +50,26 @@ class MainActivity : AppActivity<ActivityMainBinding>() {
         Handler(mainLooper).postDelayed({ keep = false }, DELAY)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.home_toolbar, menu)
+        return true
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        navigationController.navController.addOnDestinationChangedListener { _, destination, _ ->
+            menu?.findItem(R.id.item_favorite)?.isVisible = destination.id == R.id.search_fragment
+        }
+        return super.onPrepareOptionsMenu(menu)
+    }
+
     private fun initView() {
         setSupportActionBar(viewBinding.mtlMain)
 
-        val navController = supportFragmentManager.findFragmentById(R.id.fcv_main_container) as NavHostFragment
         viewBinding.apply {
-            mtlMain.setNavigationOnClickListener { navController.navController.navigateUp() }
+            mtlMain.setNavigationOnClickListener { navigationController.navController.navigateUp() }
         }
-        navController.navController.addOnDestinationChangedListener { _, destination, _ ->
-            supportActionBar?.setDisplayHomeAsUpEnabled(destination.id != R.id.searchFragment)
+        navigationController.navController.addOnDestinationChangedListener { _, destination, _ ->
+            supportActionBar?.setDisplayHomeAsUpEnabled(destination.id != R.id.search_fragment)
         }
     }
 
