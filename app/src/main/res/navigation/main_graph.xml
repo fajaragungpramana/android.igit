@@ -31,6 +31,10 @@
     <fragment
         android:id="@+id/favorite_fragment"
         android:name="com.github.fajaragungpramana.igit.module.favorite.FavoriteFragment"
-        tools:layout="@layout/fragment_favorite" />
+        tools:layout="@layout/fragment_favorite" >
+        <action
+            android:id="@+id/action_favorite_fragment_to_detail_fragment"
+            app:destination="@id/detail_fragment" />
+    </fragment>
 
 </navigation>
