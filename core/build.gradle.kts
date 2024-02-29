@@ -34,11 +34,13 @@ android {
 
             buildConfigField("String", Config.API_BASE_URL, properties.getProperty("api.base_url_release"))
             buildConfigField("String", Config.API_TOKEN, properties.getProperty("api.token_release"))
+            buildConfigField("String", Config.SQL_DATABASE, properties.getProperty("sql.database_release"))
         }
 
         debug {
             buildConfigField("String", Config.API_BASE_URL, properties.getProperty("api.base_url_debug"))
             buildConfigField("String", Config.API_TOKEN, properties.getProperty("api.token_debug"))
+            buildConfigField("String", Config.SQL_DATABASE, properties.getProperty("sql.database_debug"))
         }
     }
     compileOptions {
@@ -53,6 +55,8 @@ android {
 dependencies {
 
     implementation(Dependency.AndroidX.PAGING_RUNTIME_KTX)
+    implementation(Dependency.AndroidX.ROOM_RUNTIME)
+    kapt(Dependency.AndroidX.ROOM_COMPILER)
 
     implementation(Dependency.Google.HILT)
     kapt(Dependency.Google.HILT_COMPILER)
