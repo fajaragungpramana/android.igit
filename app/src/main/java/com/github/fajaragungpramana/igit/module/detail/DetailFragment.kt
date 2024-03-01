@@ -14,6 +14,7 @@ import coil.transform.CircleCropTransformation
 import com.github.fajaragungpramana.igit.R
 import com.github.fajaragungpramana.igit.common.app.AppFragment
 import com.github.fajaragungpramana.igit.common.contract.AppState
+import com.github.fajaragungpramana.igit.constant.IntentKey
 import com.github.fajaragungpramana.igit.core.domain.user.model.User
 import com.github.fajaragungpramana.igit.databinding.FragmentDetailBinding
 import com.github.fajaragungpramana.igit.module.follow.FollowFragment
@@ -32,7 +33,7 @@ class DetailFragment : AppFragment<FragmentDetailBinding>(), AppState {
 
     private val viewModel: DetailViewModel by viewModels()
 
-    private val login by lazy { arguments?.getString("login").orEmpty() }
+    private val login by lazy { arguments?.getString(IntentKey.LOGIN).orEmpty() }
 
     private lateinit var menu: Menu
     private lateinit var user: User

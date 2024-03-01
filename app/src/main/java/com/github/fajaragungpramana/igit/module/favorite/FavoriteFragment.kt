@@ -28,6 +28,8 @@ class FavoriteFragment : AppFragment<FragmentFavoriteBinding>(), AppState {
 
     override fun onViewCreated(savedInstanceState: Bundle?) {
         initFavorite()
+
+        viewModel.setEvent(FavoriteEvent.ListUser)
     }
 
     override fun onStateObserver() {
@@ -45,7 +47,7 @@ class FavoriteFragment : AppFragment<FragmentFavoriteBinding>(), AppState {
 
     private fun initFavorite() {
         userAdapter = UserAdapter {
-            val action = FavoriteFragmentDirections.actionFavoriteFragmentToDetailFragment()
+            val action = FavoriteFragmentDirections.actionFavoriteFragmentToDetailFragment(it.username)
             findNavController().navigate(action)
         }
 
