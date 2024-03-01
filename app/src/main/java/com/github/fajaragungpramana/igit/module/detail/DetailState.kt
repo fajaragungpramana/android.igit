@@ -8,6 +8,8 @@ sealed class DetailState {
 
     data class UserData(val user: User) : DetailState()
 
+    data class UserFavorite(val value: Boolean) : DetailState()
+
     data class MessageData(val message: String) : DetailState()
 
 }

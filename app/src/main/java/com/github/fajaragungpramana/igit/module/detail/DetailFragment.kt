@@ -1,9 +1,11 @@
 package com.github.fajaragungpramana.igit.module.detail
 
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -32,20 +34,29 @@ class DetailFragment : AppFragment<FragmentDetailBinding>(), AppState {
 
     private val login by lazy { arguments?.getString("login").orEmpty() }
 
+    private lateinit var menu: Menu
+    private lateinit var user: User
+
     override fun onViewBinding(container: ViewGroup?): FragmentDetailBinding =
         FragmentDetailBinding.inflate(layoutInflater)
 
     override fun onViewCreated(savedInstanceState: Bundle?) {
         initView()
 
-        viewModel.setEvent(DetailEvent.User(username = login))
+        viewModel.setEvent(DetailEvent.UserDetail(username = login))
+        viewModel.setEvent(DetailEvent.UserIsFavorite(username = login))
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        if (!::menu.isInitialized) this.menu = menu
+
+        super.onPrepareOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.item_add_favorite -> {
-
-            }
+            R.id.item_add_favorite -> if (::user.isInitialized)
+                viewModel.setEvent(DetailEvent.UserFavorite(user))
         }
 
         return true
@@ -65,6 +76,9 @@ class DetailFragment : AppFragment<FragmentDetailBinding>(), AppState {
                     }
 
                     is DetailState.UserData -> setUser(it.user)
+
+                    is DetailState.UserFavorite -> isUserFavorite(it.value)
+
                     is DetailState.MessageData -> Snackbar.make(
                         viewBinding.root,
                         it.message,
@@ -100,6 +114,8 @@ class DetailFragment : AppFragment<FragmentDetailBinding>(), AppState {
     }
 
     private fun setUser(user: User) {
+        this.user = user
+
         (requireActivity() as MainActivity).apply {
             title = user.username
         }
@@ -117,6 +133,15 @@ class DetailFragment : AppFragment<FragmentDetailBinding>(), AppState {
             itpUserFollower.content = user.totalFollower.toString()
             itpUserFollowing.content = user.totalFollowing.toString()
         }
+    }
+
+    private fun isUserFavorite(value: Boolean) {
+        menu.getItem(1).setIcon(
+            ContextCompat.getDrawable(
+                requireActivity(),
+                if (value) R.drawable.ic_favorite_fill_black else R.drawable.ic_favorite_black
+            )
+        )
     }
 
     override fun onDestroyView() {
