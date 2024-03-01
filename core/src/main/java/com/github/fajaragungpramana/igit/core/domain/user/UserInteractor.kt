@@ -59,22 +59,31 @@ class UserInteractor @Inject constructor(
             }
         }.flowOn(Dispatchers.IO)
 
-    override suspend fun isFavoriteUser(username: String): Flow<Boolean> = channelFlow {
+    override suspend fun getFavoriteUser(username: String): Flow<User> = channelFlow {
         sqlRepository.getUser(username).collectLatest {
             when (it) {
-                is AppResult.Success -> send(it.data != null)
+                is AppResult.Success -> send(User.mapFromEntityToObject(it.data))
+                is AppResult.Error -> send(User())
+            }
+        }
+    }.flowOn(Dispatchers.IO)
+
+    override suspend fun saveFavoriteUser(userEntity: UserEntity): Flow<Boolean> = channelFlow {
+        sqlRepository.saveUser(userEntity).collectLatest {
+            when (it) {
+                is AppResult.Success -> send(true)
                 is AppResult.Error -> send(false)
             }
         }
-    }
+    }.flowOn(Dispatchers.IO)
 
-    override suspend fun saveFavoriteUser(userEntity: UserEntity): Flow<Unit> = channelFlow {
-        sqlRepository.saveUser(userEntity).collectLatest {
+    override suspend fun deleteFavoriteUser(username: String): Flow<Boolean> = channelFlow {
+        sqlRepository.deleteUser(username).collectLatest {
             when (it) {
-                is AppResult.Success -> send(it.data ?: Unit)
-                is AppResult.Error -> send(Unit)
+                is AppResult.Success -> send(true)
+                is AppResult.Error -> send(false)
             }
         }
-    }
+    }.flowOn(Dispatchers.IO)
 
 }

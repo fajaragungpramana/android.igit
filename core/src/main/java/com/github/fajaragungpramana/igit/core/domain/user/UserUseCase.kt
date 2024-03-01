@@ -18,8 +18,10 @@ interface UserUseCase {
 
     suspend fun getListFavoriteUser(): Flow<AppResult<PagingData<User>>>
 
-    suspend fun isFavoriteUser(username: String): Flow<Boolean>
+    suspend fun getFavoriteUser(username: String): Flow<User>
 
-    suspend fun saveFavoriteUser(userEntity: UserEntity): Flow<Unit>
+    suspend fun saveFavoriteUser(userEntity: UserEntity): Flow<Boolean>
+
+    suspend fun deleteFavoriteUser(username: String): Flow<Boolean>
 
 }

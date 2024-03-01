@@ -12,4 +12,6 @@ interface ISqlRepository {
 
     suspend fun saveUser(userEntity: UserEntity): Flow<AppResult<Unit>>
 
+    suspend fun deleteUser(username: String): Flow<AppResult<Unit>>
+
 }

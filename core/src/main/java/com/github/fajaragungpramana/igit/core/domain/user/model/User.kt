@@ -53,6 +53,12 @@ data class User(
             return list
         }
 
+        fun mapFromEntityToObject(user: UserEntity?) = User(
+            avatar = user?.avatar,
+            username = user?.username,
+            fullName = user?.fullName
+        )
+
     }
 
 }
