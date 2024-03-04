@@ -7,4 +7,7 @@
     <string name="repositories">Repositori</string>
     <string name="followers">Pengikut</string>
     <string name="following">Mengikuti</string>
+    <string name="favorite">Favorit</string>
+    <string name="user_has_been_added_to_favorite">Pengguna telah ditambahkan ke favorit</string>
+    <string name="user_has_been_deleted_from_favorite">Pengguna telah dihapus dari favorit</string>
 </resources>

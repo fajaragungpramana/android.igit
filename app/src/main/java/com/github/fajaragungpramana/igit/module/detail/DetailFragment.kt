@@ -1,8 +1,11 @@
 package com.github.fajaragungpramana.igit.module.detail
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -11,6 +14,7 @@ import coil.transform.CircleCropTransformation
 import com.github.fajaragungpramana.igit.R
 import com.github.fajaragungpramana.igit.common.app.AppFragment
 import com.github.fajaragungpramana.igit.common.contract.AppState
+import com.github.fajaragungpramana.igit.constant.IntentKey
 import com.github.fajaragungpramana.igit.core.domain.user.model.User
 import com.github.fajaragungpramana.igit.databinding.FragmentDetailBinding
 import com.github.fajaragungpramana.igit.module.follow.FollowFragment
@@ -29,7 +33,12 @@ class DetailFragment : AppFragment<FragmentDetailBinding>(), AppState {
 
     private val viewModel: DetailViewModel by viewModels()
 
-    private val login by lazy { arguments?.getString("login").orEmpty() }
+    private val login by lazy { arguments?.getString(IntentKey.LOGIN).orEmpty() }
+
+    private lateinit var menu: Menu
+    private lateinit var user: User
+
+    private var isUserFavorite = false
 
     override fun onViewBinding(container: ViewGroup?): FragmentDetailBinding =
         FragmentDetailBinding.inflate(layoutInflater)
@@ -37,7 +46,34 @@ class DetailFragment : AppFragment<FragmentDetailBinding>(), AppState {
     override fun onViewCreated(savedInstanceState: Bundle?) {
         initView()
 
-        viewModel.setEvent(DetailEvent.User(username = login))
+        viewModel.setEvent(DetailEvent.UserDetail(username = login))
+        viewModel.setEvent(DetailEvent.UserIsFavorite(username = login))
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        if (!::menu.isInitialized) this.menu = menu
+
+        super.onPrepareOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.item_add_favorite -> {
+                if (::user.isInitialized)
+                    viewModel.setEvent(DetailEvent.UserFavorite(user))
+
+                Snackbar.make(
+                    viewBinding.root,
+                    if (!isUserFavorite)
+                        getString(R.string.user_has_been_added_to_favorite)
+                    else
+                        getString(R.string.user_has_been_deleted_from_favorite),
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
+        }
+
+        return true
     }
 
     override fun onStateObserver() {
@@ -54,6 +90,9 @@ class DetailFragment : AppFragment<FragmentDetailBinding>(), AppState {
                     }
 
                     is DetailState.UserData -> setUser(it.user)
+
+                    is DetailState.UserFavorite -> isUserFavorite(it.value)
+
                     is DetailState.MessageData -> Snackbar.make(
                         viewBinding.root,
                         it.message,
@@ -65,6 +104,8 @@ class DetailFragment : AppFragment<FragmentDetailBinding>(), AppState {
     }
 
     private fun initView() {
+        setHasOptionsMenu(true)
+
         val adapter = AppTabAdapter(requireActivity())
         adapter.addFragment(RepoFragment.instance(login))
         adapter.addFragment(FollowerFragment.instance(login))
@@ -87,6 +128,8 @@ class DetailFragment : AppFragment<FragmentDetailBinding>(), AppState {
     }
 
     private fun setUser(user: User) {
+        this.user = user
+
         (requireActivity() as MainActivity).apply {
             title = user.username
         }
@@ -104,6 +147,17 @@ class DetailFragment : AppFragment<FragmentDetailBinding>(), AppState {
             itpUserFollower.content = user.totalFollower.toString()
             itpUserFollowing.content = user.totalFollowing.toString()
         }
+    }
+
+    private fun isUserFavorite(value: Boolean) {
+        isUserFavorite = value
+
+        menu.getItem(1).setIcon(
+            ContextCompat.getDrawable(
+                requireActivity(),
+                if (value) R.drawable.ic_favorite_fill_black else R.drawable.ic_favorite_black
+            )
+        )
     }
 
     override fun onDestroyView() {

@@ -8,6 +8,8 @@ object Dependency {
         const val NAVIGATION_FRAGMENT_KTX = "androidx.navigation:navigation-fragment-ktx:${Version.NAVIGATION}"
         const val NAVIGATION_UI_KTX = "androidx.navigation:navigation-ui-ktx:${Version.NAVIGATION}"
         const val PAGING_RUNTIME_KTX = "androidx.paging:paging-runtime-ktx:3.2.1"
+        const val ROOM_RUNTIME = "androidx.room:room-ktx:2.6.1"
+        const val ROOM_COMPILER = "androidx.room:room-compiler:2.6.1"
 
         const val UI_AUTOMATOR = "androidx.test.uiautomator:uiautomator:2.3.0-rc01"
         const val ESPRESSO_CORE = "androidx.test.espresso:espresso-core:3.5.1"

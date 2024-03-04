@@ -6,4 +6,7 @@
     <string name="repositories">Repositories</string>
     <string name="followers">Followers</string>
     <string name="following">Following</string>
+    <string name="favorite">Favorite</string>
+    <string name="user_has_been_added_to_favorite">User has been added to favorite</string>
+    <string name="user_has_been_deleted_from_favorite">User has been deleted from favorite</string>
 </resources>
