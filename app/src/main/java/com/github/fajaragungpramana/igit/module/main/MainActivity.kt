@@ -60,7 +60,7 @@ class MainActivity : AppActivity<ActivityMainBinding>() {
             menu?.findItem(R.id.item_favorite)?.isVisible = destination.id == R.id.search_fragment
             menu?.findItem(R.id.item_add_favorite)?.isVisible =
                 destination.id == R.id.detail_fragment
-            menu?.findItem(R.id.item_theme)?.isVisible = destination.id == R.id.search_fragment
+            menu?.findItem(R.id.item_setting)?.isVisible = destination.id == R.id.search_fragment
         }
         return super.onPrepareOptionsMenu(menu)
     }
