@@ -38,6 +38,8 @@ class DetailFragment : AppFragment<FragmentDetailBinding>(), AppState {
     private lateinit var menu: Menu
     private lateinit var user: User
 
+    private var isUserFavorite = false
+
     override fun onViewBinding(container: ViewGroup?): FragmentDetailBinding =
         FragmentDetailBinding.inflate(layoutInflater)
 
@@ -56,8 +58,19 @@ class DetailFragment : AppFragment<FragmentDetailBinding>(), AppState {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.item_add_favorite -> if (::user.isInitialized)
-                viewModel.setEvent(DetailEvent.UserFavorite(user))
+            R.id.item_add_favorite -> {
+                if (::user.isInitialized)
+                    viewModel.setEvent(DetailEvent.UserFavorite(user))
+
+                Snackbar.make(
+                    viewBinding.root,
+                    if (!isUserFavorite)
+                        getString(R.string.user_has_been_added_to_favorite)
+                    else
+                        getString(R.string.user_has_been_deleted_from_favorite),
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
         }
 
         return true
@@ -137,6 +150,8 @@ class DetailFragment : AppFragment<FragmentDetailBinding>(), AppState {
     }
 
     private fun isUserFavorite(value: Boolean) {
+        isUserFavorite = value
+
         menu.getItem(1).setIcon(
             ContextCompat.getDrawable(
                 requireActivity(),
