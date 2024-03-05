@@ -2,6 +2,8 @@ package com.github.fajaragungpramana.igit.core.domain.di
 
 import com.github.fajaragungpramana.igit.core.data.local.sql.ISqlRepository
 import com.github.fajaragungpramana.igit.core.data.remote.user.UserRepository
+import com.github.fajaragungpramana.igit.core.domain.local.LocalInteractor
+import com.github.fajaragungpramana.igit.core.domain.local.LocalUseCase
 import com.github.fajaragungpramana.igit.core.domain.user.UserInteractor
 import com.github.fajaragungpramana.igit.core.domain.user.UserUseCase
 import dagger.Module
@@ -18,5 +20,9 @@ object DomainModule {
         userRepository: UserRepository,
         sqlRepository: ISqlRepository
     ): UserUseCase = UserInteractor(userRepository, sqlRepository)
+
+    @Provides
+    fun provideLocalUseCase(sqlRepository: ISqlRepository): LocalUseCase =
+        LocalInteractor(sqlRepository)
 
 }
