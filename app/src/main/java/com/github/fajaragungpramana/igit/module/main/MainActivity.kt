@@ -6,6 +6,7 @@ import android.os.Handler
 import android.view.Menu
 import android.view.View
 import android.view.animation.AnticipateInterpolator
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.animation.doOnEnd
@@ -14,16 +15,19 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import com.github.fajaragungpramana.igit.R
 import com.github.fajaragungpramana.igit.common.app.AppActivity
+import com.github.fajaragungpramana.igit.common.contract.AppState
 import com.github.fajaragungpramana.igit.core.data.local.cache.CacheManager
 import com.github.fajaragungpramana.igit.databinding.ActivityMainBinding
+import com.jakewharton.processphoenix.ProcessPhoenix
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 @AndroidEntryPoint
-class MainActivity : AppActivity<ActivityMainBinding>() {
+class MainActivity : AppActivity<ActivityMainBinding>(), AppState {
 
     private val viewModel: MainViewModel by viewModels()
 
@@ -55,9 +59,25 @@ class MainActivity : AppActivity<ActivityMainBinding>() {
     }
 
     override fun onCreated(savedInstanceState: Bundle?) {
+        viewModel.setEvent(MainEvent.Theme(false))
+
         initView()
 
         Handler(mainLooper).postDelayed({ keep = false }, DELAY)
+    }
+
+    override fun onStateObserver() {
+        lifecycleScope.launch {
+            viewModel.state.collectLatest {
+
+                when (it) {
+
+                    is MainState.AppTheme -> initTheme(it.isDark)
+
+                }
+
+            }
+        }
     }
 
     override fun onStart() {
@@ -71,11 +91,12 @@ class MainActivity : AppActivity<ActivityMainBinding>() {
             is MainEvent.Theme -> {
                 viewModel.setCache(CacheManager.IS_DARK_THEME, event.isDark)
 
-                lifecycleScope.launch {
-                    AppCompatDelegate.setDefaultNightMode(
-                        if (event.isDark) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
-                    )
-                }
+                initTheme(event.isDark)
+
+                Toast.makeText(this, getString(R.string.app_will_be_restart), Toast.LENGTH_LONG).show()
+                Handler(mainLooper).postDelayed({
+                    ProcessPhoenix.triggerRebirth(this)
+                }, 1000)
             }
         }
     }
@@ -108,6 +129,14 @@ class MainActivity : AppActivity<ActivityMainBinding>() {
         }
         navigationController.navController.addOnDestinationChangedListener { _, destination, _ ->
             supportActionBar?.setDisplayHomeAsUpEnabled(destination.id != R.id.search_fragment)
+        }
+    }
+
+    private fun initTheme(isDark: Boolean) {
+        lifecycleScope.launch {
+            AppCompatDelegate.setDefaultNightMode(
+                if (isDark) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+            )
         }
     }
 
