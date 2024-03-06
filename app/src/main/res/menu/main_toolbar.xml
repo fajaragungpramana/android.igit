@@ -14,4 +14,8 @@
         android:title="@string/favorite"
         app:showAsAction="ifRoom" />
 
+    <item
+        android:id="@+id/item_setting"
+        android:title="@string/settings" />
+
 </menu>

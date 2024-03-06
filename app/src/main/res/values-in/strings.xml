@@ -10,4 +10,8 @@
     <string name="favorite">Favorit</string>
     <string name="user_has_been_added_to_favorite">Pengguna telah ditambahkan ke favorit</string>
     <string name="user_has_been_deleted_from_favorite">Pengguna telah dihapus dari favorit</string>
+    <string name="settings">Settings</string>
+    <string name="theme">Tema</string>
+    <string name="theme_setting_desc">Tentukan tema aplikasi yang ingin digunakan, terang/gelap</string>
+    <string name="app_will_be_restart">Aplikasi akan di mulai ulang</string>
 </resources>

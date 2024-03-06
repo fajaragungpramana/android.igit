@@ -3,6 +3,7 @@ package com.github.fajaragungpramana.igit.core.data.local.sql.di
 import com.github.fajaragungpramana.igit.core.data.local.sql.ISqlRepository
 import com.github.fajaragungpramana.igit.core.data.local.sql.SqlDatabase
 import com.github.fajaragungpramana.igit.core.data.local.sql.SqlRepository
+import com.github.fajaragungpramana.igit.core.data.local.sql.dao.SettingDao
 import com.github.fajaragungpramana.igit.core.data.local.sql.dao.UserDao
 import dagger.Module
 import dagger.Provides
@@ -17,6 +18,10 @@ object SqlModule {
     fun provideUserDao(sqlDatabase: SqlDatabase): UserDao = sqlDatabase.userDao()
 
     @Provides
-    fun provideRepository(userDao: UserDao): ISqlRepository = SqlRepository(userDao)
+    fun provideSettingDao(sqlDatabase: SqlDatabase): SettingDao = sqlDatabase.settingDao()
+
+    @Provides
+    fun provideRepository(userDao: UserDao, settingDao: SettingDao): ISqlRepository =
+        SqlRepository(userDao, settingDao)
 
 }

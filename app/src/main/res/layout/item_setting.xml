@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/dimen_16dp"
+    android:layout_marginBottom="@dimen/dimen_16dp"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen_16dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_setting_title"
+            style="@style/TextBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="@string/unknown" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_setting_overview"
+            style="@style/TextRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_4dp"
+            tools:text="@string/unknown" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/sm_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

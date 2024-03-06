@@ -44,10 +44,17 @@ class SearchFragment : AppFragment<SearchFragmentBinding>(), AppState {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+
             R.id.item_favorite -> {
                 val action = SearchFragmentDirections.actionSearchFragmentToFavoriteFragment()
                 findNavController().navigate(action)
             }
+
+            R.id.item_setting -> {
+                val action = SearchFragmentDirections.actionSearchFragmentToSettingFragment()
+                findNavController().navigate(action)
+            }
+
         }
 
         return false
