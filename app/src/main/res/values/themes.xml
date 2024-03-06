@@ -1,11 +1,5 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
-    <style name="Theme.IGit" parent="App.iGit">
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
-        <item name="android:statusBarColor">@android:color/white</item>
-
-        <item name="android:windowSplashScreenAnimationDuration" tools:targetApi="s">3000</item>
-    </style>
+    <style name="Theme.IGit" parent="App.iGit" />
 
 </resources>

@@ -59,6 +59,8 @@ dependencies {
     implementation(Dependency.AndroidX.ROOM_RUNTIME)
     kapt(Dependency.AndroidX.ROOM_COMPILER)
 
+    api(Dependency.Common.EVENT_BUS)
+
     implementation(Dependency.Google.HILT)
     kapt(Dependency.Google.HILT_COMPILER)
 

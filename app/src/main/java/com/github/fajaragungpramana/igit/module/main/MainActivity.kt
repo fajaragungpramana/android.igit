@@ -6,16 +6,26 @@ import android.os.Handler
 import android.view.Menu
 import android.view.View
 import android.view.animation.AnticipateInterpolator
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import com.github.fajaragungpramana.igit.R
 import com.github.fajaragungpramana.igit.common.app.AppActivity
+import com.github.fajaragungpramana.igit.core.data.local.cache.CacheManager
 import com.github.fajaragungpramana.igit.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 @AndroidEntryPoint
 class MainActivity : AppActivity<ActivityMainBinding>() {
+
+    private val viewModel: MainViewModel by viewModels()
 
     private val navigationController by lazy { supportFragmentManager.findFragmentById(R.id.fcv_main_container) as NavHostFragment }
 
@@ -50,6 +60,26 @@ class MainActivity : AppActivity<ActivityMainBinding>() {
         Handler(mainLooper).postDelayed({ keep = false }, DELAY)
     }
 
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMainEvent(event: MainEvent) {
+        when (event) {
+            is MainEvent.Theme -> {
+                viewModel.setCache(CacheManager.IS_DARK_THEME, event.isDark)
+
+                lifecycleScope.launch {
+                    AppCompatDelegate.setDefaultNightMode(
+                        if (event.isDark) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+                    )
+                }
+            }
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_toolbar, menu)
         return true
@@ -63,6 +93,11 @@ class MainActivity : AppActivity<ActivityMainBinding>() {
             menu?.findItem(R.id.item_setting)?.isVisible = destination.id == R.id.search_fragment
         }
         return super.onPrepareOptionsMenu(menu)
+    }
+
+    override fun onStop() {
+        EventBus.getDefault().unregister(this)
+        super.onStop()
     }
 
     private fun initView() {

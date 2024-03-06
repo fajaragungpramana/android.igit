@@ -21,7 +21,7 @@ class SettingAdapter(private val onItemSwitch: (Setting) -> Unit) :
         override fun bindItem(item: Setting, position: Int) {
             viewBinding.mtvSettingTitle.text = item.title
             viewBinding.mtvSettingOverview.text = item.overview
-            viewBinding.smSetting.isChecked = item.isEnable ?: false
+            viewBinding.smSetting.isChecked = item.isEnable
 
             viewBinding.smSetting.setOnCheckedChangeListener { _, _ ->
                 onItemSwitch.invoke(item)

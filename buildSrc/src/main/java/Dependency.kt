@@ -27,6 +27,7 @@ object Dependency {
         const val COIL = "io.coil-kt:coil:2.5.0"
         const val LOTTIE = "com.airbnb.android:lottie:6.3.0"
         const val SHIMMER = "com.facebook.shimmer:shimmer:0.5.0"
+        const val EVENT_BUS = "org.greenrobot:eventbus:3.3.1"
     }
 
     object Google {

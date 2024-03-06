@@ -1,6 +1,5 @@
 package com.github.fajaragungpramana.igit.module.setting
 
-import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.fajaragungpramana.igit.core.app.AppResult
@@ -52,10 +51,6 @@ class SettingViewModel @Inject constructor(private val localUseCase: LocalUseCas
                 is AppResult.Error -> _state.send(SettingState.MessageData(it.message))
             }
         }
-    }
-
-    fun <T> setCache(key: Preferences.Key<T>, value: T): Job = viewModelScope.launch {
-        localUseCase.save(key, value)
     }
 
 }
