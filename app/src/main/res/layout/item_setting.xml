@@ -33,6 +33,7 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/sm_setting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

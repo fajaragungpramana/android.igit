@@ -8,7 +8,7 @@ import com.github.fajaragungpramana.igit.common.app.AppRecyclerViewHolder
 import com.github.fajaragungpramana.igit.core.domain.local.model.Setting
 import com.github.fajaragungpramana.igit.databinding.ItemSettingBinding
 
-class SettingAdapter :
+class SettingAdapter(private val onItemSwitch: (Setting) -> Unit) :
     AppListAdapter<ItemSettingBinding, Setting, SettingAdapter.ViewHolder>(Setting.diffUtil) {
 
     override fun onViewBinding(viewGroup: ViewGroup): ItemSettingBinding =
@@ -21,6 +21,11 @@ class SettingAdapter :
         override fun bindItem(item: Setting, position: Int) {
             viewBinding.mtvSettingTitle.text = item.title
             viewBinding.mtvSettingOverview.text = item.overview
+            viewBinding.smSetting.isChecked = item.isEnable ?: false
+
+            viewBinding.smSetting.setOnCheckedChangeListener { _, _ ->
+                onItemSwitch.invoke(item)
+            }
         }
 
     }

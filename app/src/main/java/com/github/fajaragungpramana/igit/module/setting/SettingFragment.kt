@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.fajaragungpramana.igit.R
 import com.github.fajaragungpramana.igit.common.app.AppFragment
 import com.github.fajaragungpramana.igit.common.contract.AppState
+import com.github.fajaragungpramana.igit.core.data.local.cache.CacheManager
 import com.github.fajaragungpramana.igit.core.data.local.sql.entity.SettingEntity
 import com.github.fajaragungpramana.igit.databinding.FragmentSettingBinding
 import com.github.fajaragungpramana.igit.module.adapter.SettingAdapter
@@ -41,7 +42,10 @@ class SettingFragment : AppFragment<FragmentSettingBinding>(), AppState {
     }
 
     private fun initSetting() {
-        settingAdapter = SettingAdapter()
+        settingAdapter = SettingAdapter {
+            if (it.code == SettingEntity.Code.THEME)
+                viewModel.setCache(CacheManager.IS_DARK_THEME, !it.isEnable)
+        }
         viewBinding.rvSettings.apply {
             layoutManager = LinearLayoutManager(requireActivity())
             adapter = settingAdapter
@@ -58,8 +62,8 @@ class SettingFragment : AppFragment<FragmentSettingBinding>(), AppState {
                             viewModel.setEvent(
                                 SettingEvent.SaveSetting(
                                     SettingEntity(
-                                        title = "Theme",
-                                        overview = "Determine the theme of the application that you want to use, light/dark",
+                                        title = getString(R.string.theme),
+                                        overview = getString(R.string.theme_setting_desc),
                                         code = SettingEntity.Code.THEME.name
                                     )
                                 )
