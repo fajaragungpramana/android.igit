@@ -1,5 +1,6 @@
 package com.github.fajaragungpramana.igit.core.domain.di
 
+import com.github.fajaragungpramana.igit.core.data.local.cache.ICacheRepository
 import com.github.fajaragungpramana.igit.core.data.local.sql.ISqlRepository
 import com.github.fajaragungpramana.igit.core.data.remote.user.UserRepository
 import com.github.fajaragungpramana.igit.core.domain.local.LocalInteractor
@@ -22,7 +23,9 @@ object DomainModule {
     ): UserUseCase = UserInteractor(userRepository, sqlRepository)
 
     @Provides
-    fun provideLocalUseCase(sqlRepository: ISqlRepository): LocalUseCase =
-        LocalInteractor(sqlRepository)
+    fun provideLocalUseCase(
+        sqlRepository: ISqlRepository,
+        cacheRepository: ICacheRepository
+    ): LocalUseCase = LocalInteractor(sqlRepository, cacheRepository)
 
 }

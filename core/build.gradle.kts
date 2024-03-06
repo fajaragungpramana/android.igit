@@ -54,6 +54,7 @@ android {
 
 dependencies {
 
+    api(Dependency.AndroidX.DATA_STORE)
     implementation(Dependency.AndroidX.PAGING_RUNTIME_KTX)
     implementation(Dependency.AndroidX.ROOM_RUNTIME)
     kapt(Dependency.AndroidX.ROOM_COMPILER)

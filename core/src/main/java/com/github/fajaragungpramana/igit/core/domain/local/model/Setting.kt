@@ -7,7 +7,8 @@ data class Setting(
     var id: Int? = null,
     var title: String? = null,
     var overview: String? = null,
-    var code: SettingEntity.Code
+    var code: SettingEntity.Code,
+    var isEnable: Boolean = false
 ) {
 
     companion object {
