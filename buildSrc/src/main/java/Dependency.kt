@@ -10,6 +10,7 @@ object Dependency {
         const val PAGING_RUNTIME_KTX = "androidx.paging:paging-runtime-ktx:3.2.1"
         const val ROOM_RUNTIME = "androidx.room:room-ktx:2.6.1"
         const val ROOM_COMPILER = "androidx.room:room-compiler:2.6.1"
+        const val DATA_STORE = "androidx.datastore:datastore-preferences:1.0.0"
 
         const val UI_AUTOMATOR = "androidx.test.uiautomator:uiautomator:2.3.0-rc01"
         const val ESPRESSO_CORE = "androidx.test.espresso:espresso-core:3.5.1"
