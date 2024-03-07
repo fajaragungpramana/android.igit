@@ -10,9 +10,9 @@ import com.github.fajaragungpramana.igit.common.contract.AppState
 
 abstract class AppFragment<VB : ViewBinding> : Fragment() {
 
-    private lateinit var _viewBinding: VB
+    private var _viewBinding: VB? = null
     protected val viewBinding: VB
-        get() = _viewBinding
+        get() = _viewBinding ?: throw NullPointerException("View is not inflated.")
 
     protected abstract fun onViewBinding(container: ViewGroup?): VB
 
@@ -23,7 +23,7 @@ abstract class AppFragment<VB : ViewBinding> : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        if (!::_viewBinding.isInitialized) _viewBinding = onViewBinding(container)
+        if (_viewBinding == null) _viewBinding = onViewBinding(container)
         return viewBinding.root
     }
 
@@ -33,6 +33,12 @@ abstract class AppFragment<VB : ViewBinding> : Fragment() {
         onViewCreated(savedInstanceState)
 
         if (this is AppState) onStateObserver()
+    }
+
+    override fun onDetach() {
+        _viewBinding = null
+
+        super.onDetach()
     }
 
 }

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.fajaragungpramana.igit.constant.EspressoIdlingResource
 import com.github.fajaragungpramana.igit.core.app.AppResult
+import com.github.fajaragungpramana.igit.core.data.local.sql.entity.UserEntity
 import com.github.fajaragungpramana.igit.core.domain.user.UserUseCase
 import com.github.fajaragungpramana.igit.core.domain.user.model.User
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,7 +25,9 @@ class DetailViewModel @Inject constructor(private val userUseCase: UserUseCase) 
 
     fun setEvent(event: DetailEvent) {
         when (event) {
-            is DetailEvent.User -> getUser(event.username)
+            is DetailEvent.UserDetail -> getUser(event.username)
+            is DetailEvent.UserIsFavorite -> isUserFavorite(event.username)
+            is DetailEvent.UserFavorite -> saveUserFavorite(event.user)
         }
     }
 
@@ -41,8 +44,31 @@ class DetailViewModel @Inject constructor(private val userUseCase: UserUseCase) 
                     _state.send(DetailState.UserData(it.data ?: User()))
                     _state.send(DetailState.UserLoading(false))
                 }
+
                 is AppResult.Error -> _state.send(DetailState.MessageData(it.message))
             }
+        }
+    }
+
+    private fun isUserFavorite(username: String): Job = viewModelScope.launch {
+        userUseCase.getFavoriteUser(username).collectLatest {
+            _state.send(DetailState.UserFavorite(!it.username.isNullOrEmpty()))
+        }
+    }
+
+    private fun saveUserFavorite(user: User): Job = viewModelScope.launch {
+        userUseCase.getFavoriteUser(user.username.orEmpty()).collectLatest {
+            if (it.username.isNullOrEmpty())
+                userUseCase.saveFavoriteUser(
+                    UserEntity(
+                        avatar = user.avatar,
+                        username = user.username,
+                        fullName = user.fullName
+                    )
+                ).collectLatest { value -> _state.send(DetailState.UserFavorite(value)) }
+            else
+                userUseCase.deleteFavoriteUser(user.username.orEmpty())
+                    .collectLatest { value -> _state.send(DetailState.UserFavorite(!value)) }
         }
     }
 

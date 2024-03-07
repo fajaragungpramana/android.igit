@@ -1,6 +1,7 @@
 package com.github.fajaragungpramana.igit.module.search
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
@@ -9,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.github.fajaragungpramana.igit.R
 import com.github.fajaragungpramana.igit.common.app.AppFragment
 import com.github.fajaragungpramana.igit.common.contract.AppState
 import com.github.fajaragungpramana.igit.core.data.remote.user.UserPagingSource
@@ -40,6 +42,24 @@ class SearchFragment : AppFragment<SearchFragmentBinding>(), AppState {
         initUserLoadState()
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+
+            R.id.item_favorite -> {
+                val action = SearchFragmentDirections.actionSearchFragmentToFavoriteFragment()
+                findNavController().navigate(action)
+            }
+
+            R.id.item_setting -> {
+                val action = SearchFragmentDirections.actionSearchFragmentToSettingFragment()
+                findNavController().navigate(action)
+            }
+
+        }
+
+        return false
+    }
+
     override fun onStateObserver() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.collectLatest {
@@ -51,6 +71,8 @@ class SearchFragment : AppFragment<SearchFragmentBinding>(), AppState {
     }
 
     private fun initView() {
+        setHasOptionsMenu(true)
+
         (requireActivity() as MainActivity).apply {
             supportActionBar?.setDisplayHomeAsUpEnabled(false)
         }

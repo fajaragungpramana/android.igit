@@ -1,10 +1,14 @@
 package com.github.fajaragungpramana.igit.core.di
 
+import android.content.Context
+import androidx.room.Room
 import com.github.fajaragungpramana.igit.core.BuildConfig
+import com.github.fajaragungpramana.igit.core.data.local.sql.SqlDatabase
 import com.github.fajaragungpramana.igit.core.data.remote.auth.AuthInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -34,5 +38,9 @@ object DataModule {
 
         return builder.build()
     }
+
+    @Provides
+    fun provideSqlDatabase(@ApplicationContext applicationContext: Context): SqlDatabase =
+        Room.databaseBuilder(applicationContext, SqlDatabase::class.java, BuildConfig.SQL_DATABASE).build()
 
 }
