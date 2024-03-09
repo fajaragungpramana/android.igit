@@ -33,7 +33,7 @@
                 android:drawableStart="@drawable/ic_search_black"
                 android:drawablePadding="@dimen/dimen_8dp"
                 android:hint="@string/fajaragungpramana"
-                android:textColor="@android:color/black" />
+                android:textColor="?attr/colorOnPrimary" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
